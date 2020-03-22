@@ -1,0 +1,9 @@
+com\my\spring\exception\UserException.class
+com\my\spring\controller\UserController.class
+com\my\spring\pojo\Email.class
+com\my\spring\dao\DAO.class
+com\my\spring\validator\UserValidator.class
+com\my\spring\dao\UserDAO.class
+com\my\spring\pojo\Person.class
+com\my\spring\pojo\User.class
+com\my\spring\dao\PersonDao.class
