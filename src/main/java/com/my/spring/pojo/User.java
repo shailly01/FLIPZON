@@ -27,25 +27,18 @@ public class User extends Person {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Email email;
 	
-
 	@Column(name = "usertype")
 	private String usertype;
-        
-        
-        
-        public User() {
-	super();
-	}
-        
 	
-	public User(String firstName, String lastName,String username, String password, String usertype) {
-                super(firstName,lastName);
+	public User(String username, String password, String usertype) {
 		this.username = username;
 		this.password = password;
 		this.usertype = usertype;
 	}
 
+	public User() {
 	
+	}
 
 	public String getUsertype() {
 		return usertype;

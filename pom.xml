@@ -161,18 +161,12 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.1.7</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+<!--        <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
       <version>5.2.4</version>
@@ -181,7 +175,7 @@
     <groupId>com.h2database</groupId>
     <artifactId>h2</artifactId>
     <version>1.4.196</version>
-</dependency>
+</dependency>-->
 <dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
@@ -197,14 +191,14 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.3.6.Final</version>
+            <version>5.4.8.Final</version>
         </dependency>
  
         <!-- http://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.1.Final</version>
+            <version>5.4.8.Final</version>
         </dependency>
  
  
@@ -212,7 +206,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
-            <version>5.2.10.Final</version>
+            <version>5.4.8.Final</version>
         </dependency>  
            
         <dependency>
@@ -277,23 +271,21 @@
                     </execution>
                 </executions>
             </plugin>
-<plugin>
+<!--<plugin>
     <groupId>org.flywaydb</groupId>
     <artifactId>flyway-maven-plugin</artifactId>
     <version>5.2.4</version>
     <configuration>
         <url>jdbc:mysql://localhost:3306/shoppingdb</url>
-<!--        <driver> com.mysql.cj.jdbc.Driver</driver>-->
         <user>root</user>
         <password>Abc123$</password>
-<!--        <url>jdbc:mysql://localhost:3306/mydb</url>
-        <driver> com.mysql.cj.jdbc.Driver</driver>-->
+
         <schemas>
             <schema>shoppingdb</schema>
         </schemas>
         
     </configuration>
-</plugin>
+</plugin>-->
         </plugins>
     </build>
 

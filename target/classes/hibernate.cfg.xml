@@ -8,14 +8,17 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/shoppingdb</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">Abc123$</property>
-<!--    <property name="hibernate.hbm2ddl.auto">validate</property>-->
-<!--  <property name="hibernate.id.new_generator_mappings" value="false"></property>-->
-    <property name="hibernate.hbm2ddl.auto">validate</property>
+    <property name="hibernate.hbm2ddl.auto">update</property>
      <property name="hibernate.show_sql">true</property>
+      <property name="hibernate.format_sql">true</property>
+      
+<!--      <mapping resource = "Payment.hbm.xml"/>-->
  
+   <mapping class="com.my.spring.pojo.Person"/>
   <mapping class="com.my.spring.pojo.User"/>
   <mapping class="com.my.spring.pojo.Email"/>
-  <mapping class="com.my.spring.pojo.Person"/>
+  
+ 
    
   </session-factory>
 </hibernate-configuration>
