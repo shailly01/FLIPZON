@@ -7,11 +7,11 @@
 	<bean id="userValidator" class="com.my.spring.validator.UserValidator"></bean>       
 	<bean id="userDao" class="com.my.spring.dao.UserDAO" ></bean><!--
 	
-	<bean id="categoryValidator" class="com.my.spring.validator.CategoryValidator"></bean>
-	<bean id="categoryDao" class="com.my.spring.dao.CategoryDAO" ></bean>
+-->	<bean id="categoryValidator" class="com.my.spring.validator.CategoryValidator"></bean>
+	<bean id="categoryDao" class="com.my.spring.dao.CategoryDAO" ></bean><!--
 	
-	<bean id="advertValidator" class="com.my.spring.validator.AdvertValidator"></bean>
-	<bean id="advertDao" class="com.my.spring.dao.AdvertDAO" ></bean>
+-->	<bean id="advertValidator" class="com.my.spring.validator.AdvertValidator"></bean>
+	<bean id="advertDao" class="com.my.spring.dao.AdvertDAO" ></bean><!--
 	
 	<bean id="cartDao" class="com.my.spring.dao.CartDAO" ></bean>-->
 	
