@@ -11,8 +11,10 @@ import com.my.spring.exception.AdvertException;
 import com.my.spring.pojo.Advert;
 import com.my.spring.pojo.User;
 import com.my.spring.pojo.Category;
+import java.util.Map;
 import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpSession;
+import org.hibernate.Transaction;
 
 public class AdvertDAO extends DAO {
 
@@ -42,27 +44,43 @@ public class AdvertDAO extends DAO {
 //        }
 //    }
     
-   public Advert deleteAdvert(int Id) throws AdvertException{
+   public Advert deleteAdvert(long id) throws AdvertException{
       
        try{
-          begin();
-          Advert a = getSession().load(Advert.class, Id);
-           getSession().delete(a);
+           
+               begin();    
+            Query q = getSession().createQuery("from Advert a where a.id= :id");
+            q.setLong("id", id);
+            Advert a = (Advert) q.uniqueResult();
+            getSession().delete(a);
            commit();  
            return a;
-       }
+        }
         catch (HibernateException e) {
            rollback();
            throw new AdvertException("Could not delete advert", e);
         }     
     
    }
+   
+      public Advert updateProduct(long Id, Map<String,String> product) throws AdvertException{
+          try{
+       begin();
+       Advert advert = (Advert) getSession().load(Advert.class, Id);
+       advert.setTitle(product.get("title"));
+       advert.setMessage(product.get("description"));
+       advert.setPrice(Float.parseFloat((product.get("price"))));
+       getSession().update(advert);
+       commit();
+       return advert;
+          }
+          catch (HibernateException e) {
+           rollback();
+           throw new AdvertException("Could not update product", e);
+        }         
+   }
     
-    
-    
-    
-    
-    
+ 
     public List<Advert> list(long id) throws AdvertException{
     	
     	try {            
@@ -75,8 +93,24 @@ public class AdvertDAO extends DAO {
         } catch (HibernateException e) {
             rollback();
            throw new AdvertException("Could not exists product", e);
-           //e.printStackTrace();
         }
-//    	return null;
     }
+    
+    
+//        public List<Advert> list() throws AdvertException{
+//    	
+//    	try {            
+//            begin();
+//             Query q = getSession().createQuery("from Advert");
+//            List<Advert> adverts = q.list();
+//            commit();
+//            return adverts;
+//        } catch (HibernateException e) {
+//            rollback();
+//           throw new AdvertException("Could not exists product", e);
+//        }
+//    }
+    
+    
+    
 }

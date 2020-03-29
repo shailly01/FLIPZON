@@ -24,10 +24,11 @@ import com.my.spring.exception.AdvertException;
 import com.my.spring.pojo.Advert;
 import com.my.spring.pojo.Category;
 import com.my.spring.pojo.User;
+import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/advert/*")
+//@RequestMapping("/advert/*")
 public class AdvertController {
     		
 		@Autowired
@@ -133,9 +134,29 @@ public class AdvertController {
 //	        return mav;
 //			
 //		}
+                
+//                
+//                		@RequestMapping(value = "/advert/sellerlist", method = RequestMethod.GET)
+//		public ModelAndView addCategories(HttpServletRequest request) throws Exception {
+//
+//			try {
+//                          List<Advert> adverts = advertDao.list();
+//				return new ModelAndView("seller-advert-list", "adverts", adverts);
+//				
+//			} catch (AdvertException e) {
+//				System.out.println(e.getMessage());
+//				return new ModelAndView("error", "errorMessage", "error while login");
+//			}
+//			
+//			
+//		}
+                
+                
+                
+                
 		
 		@RequestMapping(value = "/advert/sellerlist", method = RequestMethod.GET)
-		public ModelAndView addCategories(HttpServletRequest request) throws Exception {
+		public ModelAndView displayProduct(HttpServletRequest request) throws Exception {
 
 			try {
                           HttpSession session = (HttpSession) request.getSession();
@@ -156,16 +177,12 @@ public class AdvertController {
               
                 
               @RequestMapping(value = "/advert/remove/*", method = RequestMethod.GET)
-		public ModelAndView removeCategories(HttpServletRequest request) throws Exception {
+		public ModelAndView removeProduct(HttpServletRequest request) throws Exception {
                 
             String url = request.getRequestURI();
-            int id = 0;
-                System.out.println("****" + (url.split("/")[4]));
+            long id = 0;
                 id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
-            
-
-			try {
-                            
+                   try {
                    Advert ad = advertDao.deleteAdvert(id);
                    HttpSession session = (HttpSession) request.getSession();
 		   User u = (User)session.getAttribute("user");
@@ -176,10 +193,39 @@ public class AdvertController {
                     } catch (AdvertException e) {
 				System.out.println(e.getMessage());
 				return new ModelAndView("error", "errorMessage", "error while login");
-			}
-			
-			
+			}	
 		}
+                
+                
+                              @RequestMapping(value = "/advert/edit/*", method = RequestMethod.POST)
+		public ModelAndView editProduct(HttpServletRequest request) throws Exception {
+                
+            String url = request.getRequestURI();
+            long id = 0;
+                id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
+                   try {
+                       
+                    Map<String, String> product = new HashMap<>();
+                    product.put("title",request.getParameter("title"));
+                    product.put("description", request.getParameter("description"));
+                    product.put("price", request.getParameter("price"));
+                    Advert ad = advertDao.updateProduct(id, product);
+                    
+//                   HttpSession session = (HttpSession) request.getSession();
+//		   User u = (User)session.getAttribute("user");
+//                   long ident = u.getPersonID();
+//                   List<Advert> adverts = advertDao.list(ident);
+                   
+                   return new ModelAndView("updateSuccess");
+                    } catch (AdvertException e) {
+				System.out.println(e.getMessage());
+				return new ModelAndView("error", "errorMessage", "error while login");
+			}	
+		}
+                
+                
+                
+                
              
                 
 

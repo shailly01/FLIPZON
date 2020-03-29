@@ -11,14 +11,14 @@
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-<%-- 	<a href="${contextPath}/"><input type="submit" value="Logout"></a><br/><br> --%>
+ 	<a href="${contextPath}/"><input type="submit" value="Logout"></a><br/><br> 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 	<a href="${contextPath}/user/">Seller Home</a><br/>
 	<br>
 
 	<form:form action="${contextPath}/advert/cart" method="post" commandName="advert">
-	<table border="1" cellpadding="5" cellspacing="5">
+	<table border="1" cellpadding="2" cellspacing="2">
 		<tr>
 			<td><b>Product Name</b></td>
 			<td><b>Product Description</b></td>
@@ -32,6 +32,7 @@
                 
                 
 		<c:forEach var="adv" items="${adverts}">
+                    <form action="${contextPath}/advert/edit/${adv.id}.htm"method="POST">
 			<tr>
                             
                             <td><input type="text" name="title" value="${adv.title}"/></td>
@@ -41,10 +42,13 @@
                     	    ${categ}
                             </c:forEach></td>
                             <td><img height="150" width="150" src="${adv.filename}" /></td>
-                            <td><input type="text" name="description" value= "${adv.price}"/></td>
-                            <td><a href="/advert/remove/${adv.id}.htm" >Remove</a></td>
+                            <td><input type="text" name="price" value= "${adv.price}"/></td>
+                            <td><button value="edit" type="submit">Edit</button></td>
+                            <td><a href="${contextPath}/advert/remove/${adv.id}.htm" >Remove</a></td>
                             
 			</tr>
+                        </form>
+
 		</c:forEach>
 	</table>
 	</form:form>
