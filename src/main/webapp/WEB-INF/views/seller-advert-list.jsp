@@ -17,7 +17,7 @@
 	<a href="${contextPath}/user/">Seller Home</a><br/>
 	<br>
 
-	<form:form action="${contextPath}/advert/cart" method="post" commandName="advert">
+	
 	<table border="1" cellpadding="2" cellspacing="2">
 		<tr>
 			<td><b>Product Name</b></td>
@@ -51,6 +51,6 @@
 
 		</c:forEach>
 	</table>
-	</form:form>
+	
 </body>
 </html>

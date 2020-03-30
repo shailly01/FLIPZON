@@ -12,7 +12,7 @@
      <property name="hibernate.show_sql">true</property>
       <property name="hibernate.format_sql">true</property>
        
-   <mapping class="com.my.spring.pojo.Person"/>
+  <mapping class="com.my.spring.pojo.Person"/>
   <mapping class="com.my.spring.pojo.User"/>
   <mapping class="com.my.spring.pojo.Email"/>
   <mapping class="com.my.spring.pojo.Category"/>

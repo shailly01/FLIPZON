@@ -13,6 +13,6 @@
     </head>
     <body>
         <h1>Update sucessfully......</h1>
-        <a href = "${contextPath}/advert/sellerlist"> click to go back</a>
+        <!--<a href="${contextPath}/user/">Seller Home</a><br/>-->
     </body>
 </html>

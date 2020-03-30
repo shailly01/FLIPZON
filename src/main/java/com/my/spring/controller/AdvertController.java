@@ -216,7 +216,7 @@ public class AdvertController {
 //                   long ident = u.getPersonID();
 //                   List<Advert> adverts = advertDao.list(ident);
                    
-                   return new ModelAndView("updateSuccess");
+                   return new ModelAndView("updateSucess");
                     } catch (AdvertException e) {
 				System.out.println(e.getMessage());
 				return new ModelAndView("error", "errorMessage", "error while login");
