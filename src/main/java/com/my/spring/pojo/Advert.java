@@ -52,10 +52,12 @@ public class Advert {
 
 	@ManyToOne
 	private User user;
-	        
+	
 	@ManyToMany(mappedBy="adverts")
 	private Set<Category> categories = new HashSet<Category>();
 	
+	@ManyToMany(mappedBy="adverts")
+	private Set<Cart> cart = new HashSet<Cart>();
 	
 	@Transient
 	int postedBy;
@@ -79,18 +81,18 @@ public class Advert {
 	@Transient
 	private CommonsMultipartFile photo;
 
-    public Advert(String title, String message, User user, Category catergory) {
+    public Advert(String title, String message, User user, Category catergory, Cart cart) {
         this.title = title;
         this.message = message;
         this.user = user;      
         this.categories.add(catergory); 
-        //this.cart.add(cart);
+        this.cart.add(cart);
     }
 
     public Advert() {
     }
- 
-    public long getId() {
+
+	public long getId() {
 		return id;
 	}
 
@@ -138,6 +140,15 @@ public class Advert {
 		this.postedBy = postedBy;
 	}
 
+    public Set<Cart> getCart() {
+        return cart;
+    }
+
+    public void setCart(Set<Cart> cart) {
+        this.cart = cart;
+    }
+
+        
     
   
 

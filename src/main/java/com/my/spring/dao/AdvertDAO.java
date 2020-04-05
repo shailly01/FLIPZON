@@ -97,19 +97,19 @@ public class AdvertDAO extends DAO {
     }
     
     
-//        public List<Advert> list() throws AdvertException{
-//    	
-//    	try {            
-//            begin();
-//             Query q = getSession().createQuery("from Advert");
-//            List<Advert> adverts = q.list();
-//            commit();
-//            return adverts;
-//        } catch (HibernateException e) {
-//            rollback();
-//           throw new AdvertException("Could not exists product", e);
-//        }
-//    }
+        public List<Advert> list() throws AdvertException{
+    	
+    	try {            
+            begin();
+             Query q = getSession().createQuery("from Advert");
+            List<Advert> adverts = q.list();
+            commit();
+            return adverts;
+        } catch (HibernateException e) {
+            rollback();
+           throw new AdvertException("Could not exists product", e);
+        }
+    }
     
     
     

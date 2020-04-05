@@ -44,8 +44,7 @@
                             <td><img height="150" width="150" src="${adv.filename}" /></td>
                             <td><input type="text" name="price" value= "${adv.price}"/></td>
                             <td><button value="edit" type="submit">Edit</button></td>
-                            <td><a href="${contextPath}/advert/remove/${adv.id}.htm" >Remove</a></td>
-                            
+                            <td><a href="${contextPath}/advert/remove/${adv.id}.htm" >Remove</a></td>                        
 			</tr>
                         </form>
 

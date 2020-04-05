@@ -13,7 +13,7 @@
 -->	<bean id="advertValidator" class="com.my.spring.validator.AdvertValidator"></bean>
 	<bean id="advertDao" class="com.my.spring.dao.AdvertDAO" ></bean><!--
 	
-	<bean id="cartDao" class="com.my.spring.dao.CartDAO" ></bean>-->
+-->	<bean id="cartDao" class="com.my.spring.dao.CartDAO" ></bean>
 	
 <!--	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		 one of the properties available; the maximum file size in bytes 

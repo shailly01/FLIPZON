@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1>Update sucessfully......</h1>
-        <!--<a href="${contextPath}/user/">Seller Home</a><br/>-->
+
+        <a href="../sellerlist">Go Back</a><br/>
     </body>
 </html>

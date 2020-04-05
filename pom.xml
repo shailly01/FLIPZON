@@ -162,6 +162,12 @@
             <type>jar</type>
         </dependency>
         <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
@@ -272,21 +278,7 @@
                     </execution>
                 </executions>
             </plugin>
-<!--<plugin>
-    <groupId>org.flywaydb</groupId>
-    <artifactId>flyway-maven-plugin</artifactId>
-    <version>5.2.4</version>
-    <configuration>
-        <url>jdbc:mysql://localhost:3306/shoppingdb</url>
-        <user>root</user>
-        <password>Abc123$</password>
 
-        <schemas>
-            <schema>shoppingdb</schema>
-        </schemas>
-        
-    </configuration>
-</plugin>-->
         </plugins>
     </build>
 

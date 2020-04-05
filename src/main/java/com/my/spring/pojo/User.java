@@ -27,6 +27,17 @@ public class User extends Person {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Email email;
 	
+//	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//	private Cart cart;
+//	
+//	public Cart getCart() {
+//		return cart;
+//	}
+//
+//	public void setCart(Cart cart) {
+//		this.cart = cart;
+//	}
+
 	@Column(name = "usertype")
 	private String usertype;
 	

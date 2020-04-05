@@ -45,6 +45,11 @@ public class UserController {
 	protected String goToUserHome(HttpServletRequest request) throws Exception {
 		return "user-home";
 	}
+        
+        @RequestMapping(value = "/user/buyer", method = RequestMethod.GET)
+	protected String goToBuyerHome(HttpServletRequest request) throws Exception {
+		return "buyer-home";
+	}
 	
 	
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)

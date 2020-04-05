@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.my.spring.dao.AdvertDAO;
+import com.my.spring.dao.CartDAO;
 import com.my.spring.dao.CategoryDAO;
 import com.my.spring.dao.UserDAO;
 import com.my.spring.exception.AdvertException;
 import com.my.spring.pojo.Advert;
+import com.my.spring.pojo.Cart;
 import com.my.spring.pojo.Category;
 import com.my.spring.pojo.User;
 import java.util.HashMap;
@@ -38,6 +40,12 @@ public class AdvertController {
 		@Autowired
 		@Qualifier("categoryDao")
 		CategoryDAO categoryDao;
+                
+                
+                
+                @Autowired
+		@Qualifier("cartDao")
+		 CartDAO cartDao;
 		
 		@Autowired
 		@Qualifier("userDao")
@@ -71,6 +79,7 @@ public class AdvertController {
 	            	categoryDao.update(c); //to maintain many to many relationship
 				
 	            }
+                    
 	            if (advert.getFilename().trim() != "" || advert.getFilename() != null) {
 					File directory;
 					String check = File.separator; // Checking if system is linux
@@ -124,16 +133,16 @@ public class AdvertController {
 			
 		}
 		
-//		@RequestMapping(value = "/advert/list", method = RequestMethod.GET)
-//		public ModelAndView addCategory(HttpServletRequest request) throws Exception {
-//                        
-//			ModelAndView mav = new ModelAndView("advert-list");
-//			List<Advert> adverts = advertDao.list();
-//			mav.addObject("adverts", adverts);
-////	        mav.addObject("cart", new Cart());
-//	        return mav;
-//			
-//		}
+		@RequestMapping(value = "/advert/list", method = RequestMethod.GET)
+		public ModelAndView addCategory(HttpServletRequest request) throws Exception {
+                        
+			ModelAndView mav = new ModelAndView("advert-list");
+			List<Advert> adverts = advertDao.list();
+			mav.addObject("adverts", adverts);
+	        mav.addObject("cart", new Cart());
+	        return mav;
+			
+		}
                 
 //                
 //                		@RequestMapping(value = "/advert/sellerlist", method = RequestMethod.GET)
@@ -209,13 +218,7 @@ public class AdvertController {
                     product.put("title",request.getParameter("title"));
                     product.put("description", request.getParameter("description"));
                     product.put("price", request.getParameter("price"));
-                    Advert ad = advertDao.updateProduct(id, product);
-                    
-//                   HttpSession session = (HttpSession) request.getSession();
-//		   User u = (User)session.getAttribute("user");
-//                   long ident = u.getPersonID();
-//                   List<Advert> adverts = advertDao.list(ident);
-                   
+                    Advert ad = advertDao.updateProduct(id, product);                   
                    return new ModelAndView("updateSucess");
                     } catch (AdvertException e) {
 				System.out.println(e.getMessage());
@@ -223,7 +226,7 @@ public class AdvertController {
 			}	
 		}
                 
-                
+               
                 
                 
              
