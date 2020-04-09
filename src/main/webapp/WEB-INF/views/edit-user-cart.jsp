@@ -21,7 +21,7 @@
         <a href="${contextPath}/user/buyer">Customer Home</a><br/>
         <br>
         
- <form:form action="${contextPath}/cart/checkout" method="post" commandName="cart">       
+        
       	<table border="1" cellpadding="5" cellspacing="5">
 		<tr>
 			<td><b>Product Name</b></td>
@@ -30,25 +30,24 @@
                         <td><b>Quantity</b></td>
                         <td><b>Final Price</b></td>
                         <td><b>Option</b></td>
-                        <td><b>Option</b></td>
 			
 		</tr>  
 	
             <c:forEach var="c" items="${carts}">  
+                <form action="${contextPath}/cart/update/${c.id}.htm" method="POST"> 
                          <tr>
 		<td>${c.title}</td>			
                 <td><img height="150" width="150" src="${c.filename}" /></td>
                 <td>${c.totalprice}</td>
-               <td>${c.quantity}</td> 
-                <%-- <td><input type="number" name="quantity" value= "${c.quantity}"/></td>--%>
+        <%--       <td>${c.quantity}</td> --%>
+              <td><input type="number" name="quantity" value= "${c.quantity}"/></td>
                 <td>${c.totalprice*c.quantity}</td>
-                <td><a href="${contextPath}/cart/remove/${c.id}.htm"><button type="button">Remove</button></a></td> 
-                <td><a href="${contextPath}/cart/edit" ><button type="button">Edit</button></a></td>
+                <td><button value="edit" type="submit">Edit</button></td>
 			</tr>
+                        	</form>
+
                </c:forEach>
 		
-	</table>
-     <input type="submit" value="Checkout Items" />
-	</form:form>
+        </table>
 </body>
 </html>

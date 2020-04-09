@@ -60,11 +60,11 @@ public class Cart{
 	@Column(name="totalprice")
 	private Float totalprice;
         
-        @Column(name = "quantity", nullable = false, columnDefinition = "int default 1")
+        @Column(name = "quantity")
         private int quantity;
         
-        @Column(name = "finalPrice")
-        private Float finalPrice;
+//        @Column(name = "finalPrice")
+//        private Float finalPrice;
 
 	public Cart(){
 		
@@ -76,7 +76,7 @@ public class Cart{
 		this.totalprice = totalprice;
                 this.user = user;
                 this.quantity = quantity;
-                this.finalPrice = finalPrice;
+                //this.finalPrice = finalPrice;
 	}
 
 	public long getId() {
@@ -136,14 +136,14 @@ public class Cart{
         this.quantity = quantity;
     }
 
-    public Float getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(Float finalPrice) {
-        this.finalPrice = finalPrice;
-    }
-    
+//    public Float getFinalPrice() {
+//        return finalPrice;
+//    }
+//
+//    public void setFinalPrice(Float finalPrice) {
+//        this.finalPrice = finalPrice;
+//    }
+//    
     
     
 

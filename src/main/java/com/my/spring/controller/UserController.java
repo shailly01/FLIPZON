@@ -1,5 +1,6 @@
 package com.my.spring.controller;
 
+import com.my.spring.dao.AdminDAO;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,7 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.my.spring.dao.UserDAO;
 import com.my.spring.exception.UserException;
 import com.my.spring.pojo.User;
+import com.my.spring.pojo.Admin;
 import com.my.spring.validator.UserValidator;
+import javax.servlet.ServletContext;
 
 @Controller
 @RequestMapping("/user/*")
@@ -31,10 +34,18 @@ public class UserController {
 	@Autowired
 	@Qualifier("userDao")
 	UserDAO userDao;
+        
+        
+        @Autowired
+	@Qualifier("adminDao")
+	AdminDAO adminDao;
 
 	@Autowired
 	@Qualifier("userValidator")
 	UserValidator validator;
+        
+        @Autowired
+	ServletContext servletContext;
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
@@ -61,24 +72,37 @@ public class UserController {
 
 			System.out.print("loginUser");
 
-			User u = userDao.get(request.getParameter("username"), request.getParameter("password"));
+                       User u = userDao.get(request.getParameter("username"), request.getParameter("password"));
+                       Admin a = adminDao.get(request.getParameter("username"), request.getParameter("password"));
 			
-			if(u == null){
+			if((u == null) && (a == null)){
 				System.out.println("UserName/Password does not exist");
 				session.setAttribute("errorMessage", "UserName/Password does not exist");
 				return "error";
 			}
+                        
+                         else if((a!=null) && (a.getUsertype().equals("admin"))){
+				session.setAttribute("admin", "a");
+				return "admin-home";
+			}
 			
-			else if(u.getUsertype().equals("Buyer")){
+			else if((u!=null) && u.getUsertype().equals("Buyer")&&(u.getActive().equalsIgnoreCase("true"))){
 				session.setAttribute("user", u);
 				return "buyer-home";
 			}
 			
-			else if(!(u.getUsertype().equals("Buyer"))&&!(u.getUsertype().equals("Seller"))){
-				session.setAttribute("errorMessage", "UserName/Password does not exist");
+//			else if(!(u.getUsertype().equals("Buyer"))&&!(u.getUsertype().equals("Seller")) && !(a.getUsertype().equals("admin")) ){
+//				session.setAttribute("errorMessage", "UserName/Password/admin does not exist");
+//				return "error";
+//			}
+//                        
+                        else if(((u!=null)&&u.getUsertype().equals("Seller") &&(u.getActive().equalsIgnoreCase("false")))
+                                ||((u!=null)&&u.getUsertype().equals("Seller") &&(u.getActive().equalsIgnoreCase("Reject")))){
+				session.setAttribute("errorMessage", "Account is not activate");
 				return "error";
 			}
-			
+                        
+                       
 			else{
 				session.setAttribute("user", u);
 				return "user-home";
@@ -129,12 +153,13 @@ public class UserController {
 
 		try {
 
-			System.out.print("registerNewUser");
-
-			User u = userDao.register(user);
-			
-			request.getSession().setAttribute("user", u);
-			Email email= new SimpleEmail();
+                System.out.print("registerNewUser");
+                 User someUser=userDao.getUserByUsername(user.getUsername());
+                if(someUser==null){
+                    User u = userDao.register(user);
+                   request.getSession().setAttribute("user", u);
+                   if(u.getActive().equalsIgnoreCase("true")){
+                   Email email= new SimpleEmail();
 	           email.setHostName("smtp.googlemail.com");
 	           email.setSmtpPort(465);
 	           email.setAuthentication("shaillyj6@gmail.com", "Abc123$$");
@@ -146,11 +171,19 @@ public class UserController {
 	           email.send();
 			
 			return new ModelAndView("account-success", "user", u);
-
+                   }
+                    return new ModelAndView("seller_inactive_account", "user", u);
+                  
+		}
+                else{
+                return new ModelAndView("error", "errorMessage", "Username Already Exists");
+                }
+		   
 		} catch (UserException e) {
 			System.out.println("Exception: " + e.getMessage());
 			return new ModelAndView("error", "errorMessage", "error while login");
 		}
+                
 	}
 
 		protected Map referenceData(HttpServletRequest request) throws Exception {

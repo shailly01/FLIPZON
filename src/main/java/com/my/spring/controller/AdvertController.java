@@ -22,6 +22,7 @@ import com.my.spring.dao.CartDAO;
 import com.my.spring.dao.CategoryDAO;
 import com.my.spring.dao.UserDAO;
 import com.my.spring.exception.AdvertException;
+import com.my.spring.exception.CartException;
 import com.my.spring.pojo.Advert;
 import com.my.spring.pojo.Cart;
 import com.my.spring.pojo.Category;
@@ -138,7 +139,20 @@ public class AdvertController {
                         
 			ModelAndView mav = new ModelAndView("advert-list");
 			List<Advert> adverts = advertDao.list();
-			mav.addObject("adverts", adverts);
+                Map<Integer,Integer> quantity = new LinkedHashMap<Integer,Integer>();
+		quantity.put(1, 1);
+		quantity.put(2, 2);
+                quantity.put(3, 3);
+                quantity.put(4, 4);
+                quantity.put(5,5);
+                quantity.put(6,6);
+                quantity.put(7,7);
+                quantity.put(8,8);
+                quantity.put(9,9);
+                quantity.put(10,10);
+		
+		mav.addObject("quantity", quantity);
+                mav.addObject("adverts", adverts);
 	        mav.addObject("cart", new Cart());
 	        return mav;
 			
@@ -205,8 +219,31 @@ public class AdvertController {
 			}	
 		}
                 
+                           
+                @RequestMapping(value = "/advert/edit", method = RequestMethod.GET)
+		public ModelAndView displayProductList(HttpServletRequest request) throws Exception {
+
+			try {
+                          HttpSession session = (HttpSession) request.getSession();
+		          User u = (User)session.getAttribute("user");
+                          long id = u.getPersonID();
+                          List<Advert> adverts = advertDao.list(id);
+                            return new ModelAndView("edit-product-list", "adverts", adverts);
+				
+			} catch (AdvertException e) {
+				System.out.println(e.getMessage());
+				return new ModelAndView("error", "errorMessage", "error while login");
+			}			
+		}
                 
-                              @RequestMapping(value = "/advert/edit/*", method = RequestMethod.POST)
+                
+                
+                
+                
+                
+                
+                
+                @RequestMapping(value = "/advert/update/*", method = RequestMethod.POST)
 		public ModelAndView editProduct(HttpServletRequest request) throws Exception {
                 
             String url = request.getRequestURI();
@@ -218,8 +255,15 @@ public class AdvertController {
                     product.put("title",request.getParameter("title"));
                     product.put("description", request.getParameter("description"));
                     product.put("price", request.getParameter("price"));
-                    Advert ad = advertDao.updateProduct(id, product);                   
-                   return new ModelAndView("updateSucess");
+                    Advert ad = advertDao.updateProduct(id, product); 
+                   HttpSession session = (HttpSession) request.getSession();
+		   User u = (User)session.getAttribute("user");
+                   long ident = u.getPersonID();
+                   List<Advert> adverts = advertDao.list(ident);
+                   
+                   return new ModelAndView("seller-advert-list", "adverts", adverts);
+                    
+                  // return new ModelAndView("updateSucess");
                     } catch (AdvertException e) {
 				System.out.println(e.getMessage());
 				return new ModelAndView("error", "errorMessage", "error while login");

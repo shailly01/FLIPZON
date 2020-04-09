@@ -14,6 +14,7 @@ import com.my.spring.pojo.Cart;
 import com.my.spring.pojo.Category;
 import com.my.spring.pojo.User;
 import java.util.Iterator;
+import java.util.Map;
 
 public class CartDAO extends DAO {
 	
@@ -82,7 +83,7 @@ public Cart insert(long id,User u,int quant) throws CartException {
                          Object[] b = (Object[])it.next();
                        cart.setUser(u);
                        cart.setQuantity(quant);
-                       cart.setFinalPrice(quant*(Float.parseFloat(b[2].toString())));
+                      // cart.setFinalPrice(quant*(Float.parseFloat(b[2].toString())));
                         cart.setFilename(b[1].toString());
                         cart.setTitle(b[0].toString());
                         cart.setTotalprice(Float.parseFloat(b[2].toString()));
@@ -118,7 +119,23 @@ public Cart insert(long id,User u,int quant) throws CartException {
         }
         return user;
     }
-	
+        
+        
+        public Cart updateQuantity(long Id, Map<String,String> quantity) throws CartException{
+          try{
+       begin();
+       Cart cart = (Cart) getSession().load(Cart.class, Id);
+       cart.setQuantity(Integer.parseInt(quantity.get("quantity")));
+       getSession().update(cart);
+       commit();
+       return cart;
+          }
+          catch (HibernateException e) {
+           rollback();
+           throw new CartException("Could not update product", e);
+        }         
+   }
+        	
 //	public List<Cart> list(){
 //		begin();
 //		Query q = getSession().createQuery("from Cart");

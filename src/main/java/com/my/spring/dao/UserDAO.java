@@ -6,7 +6,10 @@ import org.hibernate.Query;
 import com.my.spring.exception.UserException;
 import com.my.spring.pojo.Email;
 import com.my.spring.pojo.User;
+import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
+ 
 public class UserDAO extends DAO {
 
 	public UserDAO() {
@@ -41,6 +44,22 @@ public class UserDAO extends DAO {
 			throw new UserException("Could not get user " + userId, e);
 		}
 	}
+        
+        
+        public User getUserByUsername(String username) {
+                  
+		begin();
+                System.out.println("inside userDAO");
+		Query q = getSession().createQuery("from User u where u.username = :username");
+		q.setString("username", username);
+                User u =(User) q.uniqueResult();
+                commit();
+		return u;
+               
+	}
+        
+        
+        
 
 	public User register(User u)
 			throws UserException {
@@ -55,6 +74,12 @@ public class UserDAO extends DAO {
 			user.setLastName(u.getLastName());
 			user.setEmail(email);
 			email.setUser(user);
+                        if(u.getUsertype().equalsIgnoreCase("Buyer")){
+                            user.setActive("true");
+                        }
+                        else{
+                        user.setActive("false");
+                        }
 			getSession().save(user);
 			commit();
 			return user;
@@ -75,4 +100,7 @@ public class UserDAO extends DAO {
 			throw new UserException("Could not delete user " + user.getUsername(), e);
 		}
 	}
+        
+        
+
 }

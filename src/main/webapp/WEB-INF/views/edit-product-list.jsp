@@ -27,27 +27,25 @@
 			<td><b>Image</b></td>
 			<td><b>Price</b></td>
                         <td><b>Option</b></td>
-                        <td><b>Option</b></td>
 			
 		</tr>
                                
                 
                 
 		<c:forEach var="adv" items="${adverts}">
-                    <form action="${contextPath}/advert/edit" method="get">
+                    <form action="${contextPath}/advert/update/${adv.id}.htm" method="POST">
 			<tr>
                             
-                            <td>${adv.title}</td>
-                            <td>${adv.message}</td>
+                            <td><input type="text" name="title" value="${adv.title}"/></td>
+                            <td><input type="text" name="description" value="${adv.message}"/></td>
                             <td>${adv.user.username}</td>
                             <td><c:forEach var="categ" items="${adv.categories}">
                     	    ${categ}
                             </c:forEach></td>
                             <td><img height="150" width="150" src="${adv.filename}" /></td>
-                            <td>${adv.price}</td>
+                            <td><input type="text" name="price" value= "${adv.price}"/></td>
                             <td><button value="edit" type="submit">Edit</button></td>
-                            <td><a href="${contextPath}/advert/remove/${adv.id}.htm" ><button type="button">Remove</button></a></td>                        
-			</tr>
+                            </tr>
                         </form>
 
 		</c:forEach>

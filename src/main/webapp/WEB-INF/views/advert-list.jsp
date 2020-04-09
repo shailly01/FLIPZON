@@ -48,7 +48,15 @@
                     </c:forEach></td>
                 <td><img height="150" width="150" src="${adv.filename}" /></td>
                 <td>${adv.price}</td>
-                <td><input type="text" name="quantity" value="${cart.quantity}"/></td>
+                
+                <td><form:select path="quantity" required="required">
+                        <%-- <form:option value="NONE" label="--- Select ---" /> --%>
+					  <form:options items="${quantity}" />
+				      </form:select>
+                </td>
+                    
+                
+<!--                <td><input type="text" name="quantity" value="${cart.quantity}"/></td>-->
                 <td><input type="submit" value="Add to Cart" /></td>
 			</tr>
 		

@@ -1,5 +1,6 @@
 package com.my.spring.pojo;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,53 +8,59 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "user_table")
-@PrimaryKeyJoinColumn(name = "personID")
-public class User extends Person {
 
-	@Column(name = "username", unique=true)
+@Entity
+@Table(name = "admin_table")
+public class Admin implements Serializable{
+    
+        @Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "adminID", unique=true, nullable = false)
+	private long adminID;
+
+	@Column(name = "userName",unique=true)
 	private String username;
 
 	@Column(name = "password")
 	private String password;
 
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-	private Email email;
-	
 //	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//	private Cart cart;
-//	
-//	public Cart getCart() {
-//		return cart;
-//	}
-//
-//	public void setCart(Cart cart) {
-//		this.cart = cart;
-//	}
+//	private Email email;
+	
 
 	@Column(name = "usertype")
 	private String usertype;
         
         @Column(name = "isactive")
-	private String active;
+	private String isactive;
 	
-	public User(String username, String password, String usertype) {
+	public Admin(String username, String password, String usertype) {
 		this.username = username;
 		this.password = password;
 		this.usertype = usertype;
 	}
 
-	public User() {
+	public Admin() {
             
 	}
 
+    public long getAdminID() {
+        return adminID;
+    }
+
+    public void setAdminID(long adminID) {
+        this.adminID = adminID;
+    }
+
+        
+        
+        
+        
 	public String getUsertype() {
 		return usertype;
 	}
@@ -78,23 +85,14 @@ public class User extends Person {
 		this.password = password;
 	}
 
-	public Email getEmail() {
-		return email;
-	}
 
-	public void setEmail(Email email) {
-		this.email = email;
-	}
-
-    public String getActive() {
-        return active;
+    public String isIsactive() {
+        return isactive;
     }
 
-    public void setActive(String active) {
-        this.active = active;
+    public void setIsactive(String isactive) {
+        this.isactive = isactive;
     }
-
-
         
         
 
