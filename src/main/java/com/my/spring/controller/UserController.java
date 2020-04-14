@@ -25,6 +25,7 @@ import com.my.spring.pojo.User;
 import com.my.spring.pojo.Admin;
 import com.my.spring.validator.UserValidator;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/user/*")
@@ -51,8 +52,8 @@ public class UserController {
 	private void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
-	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+ 
+        @RequestMapping(value = "/", method = RequestMethod.GET)
 	protected String goToUserHome(HttpServletRequest request) throws Exception {
 		return "user-home";
 	}
@@ -135,7 +136,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/user/register", method = RequestMethod.POST)
-	protected ModelAndView registerNewUser(HttpServletRequest request,  @ModelAttribute("user") User user, BindingResult result) throws Exception {
+	protected ModelAndView registerNewUser(HttpServletRequest request, @ModelAttribute("user") User user, BindingResult result, HttpServletResponse response) throws Exception {
 
 		validator.validate(user, result);
 
@@ -154,8 +155,10 @@ public class UserController {
 		try {
 
                 System.out.print("registerNewUser");
-                 User someUser=userDao.getUserByUsername(user.getUsername());
-                if(someUser==null){
+               //  User someUser=userDao.getUserByUsername(user.getUsername());
+                 //boolean em = userDao.checkIfEmailAlreadyExists(user.getEmail().getEmailAddress());
+                //if((someUser==null) && em){
+                   // if(someUser==null){
                     User u = userDao.register(user);
                    request.getSession().setAttribute("user", u);
                    if(u.getActive().equalsIgnoreCase("true")){
@@ -174,10 +177,10 @@ public class UserController {
                    }
                     return new ModelAndView("seller_inactive_account", "user", u);
                   
-		}
-                else{
-                return new ModelAndView("error", "errorMessage", "Username Already Exists");
-                }
+		//}
+//                else{
+//                return new ModelAndView("error", "errorMessage", "Username/Email Address Already Exists"); //javascript alert
+//                }
 		   
 		} catch (UserException e) {
 			System.out.println("Exception: " + e.getMessage());

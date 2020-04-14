@@ -14,21 +14,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.my.spring.dao.AdvertDAO;
 import com.my.spring.dao.CartDAO;
 import com.my.spring.dao.CategoryDAO;
 import com.my.spring.dao.UserDAO;
 import com.my.spring.exception.AdvertException;
-import com.my.spring.exception.CartException;
 import com.my.spring.pojo.Advert;
 import com.my.spring.pojo.Cart;
 import com.my.spring.pojo.Category;
 import com.my.spring.pojo.User;
+import com.my.spring.validator.AdvertValidator;
 import java.util.HashMap;
 import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
+
+
 
 @Controller
 //@RequestMapping("/advert/*")
@@ -42,8 +45,6 @@ public class AdvertController {
 		@Qualifier("categoryDao")
 		CategoryDAO categoryDao;
                 
-                
-                
                 @Autowired
 		@Qualifier("cartDao")
 		 CartDAO cartDao;
@@ -51,6 +52,11 @@ public class AdvertController {
 		@Autowired
 		@Qualifier("userDao")
 		UserDAO userDao;
+                
+                
+        @Autowired
+	@Qualifier("advertValidator")
+	AdvertValidator validator;
 		
 		@Autowired
 		ServletContext servletContext;
@@ -65,64 +71,58 @@ public class AdvertController {
 		}
                  
 		@RequestMapping(value = "/advert/add", method = RequestMethod.POST)
-		public ModelAndView addCategory(@ModelAttribute("advert") Advert advert, BindingResult result) throws Exception {
-
-			try {			
-				
-				User u = userDao.get(advert.getPostedBy());
-				advert.setUser(u);
-				advert = advertDao.create(advert);
-				
-	            
-	            for(Category c: advert.getCategories()){
+		public ModelAndView addCategory(@ModelAttribute("advert") Advert advert,@RequestParam("productPicture")MultipartFile productPicture, BindingResult result) throws Exception {
+               System.out.println("Sending to Validator");
+               advert.setProductPicture(productPicture);
+               
+		validator.validate(advert, result);
+		if(result.hasErrors()){
+                   ModelAndView mv = new ModelAndView();
+			mv.addObject("categories", categoryDao.list());			
+			mv.addObject("advert", advert);
+			mv.setViewName("advert-form");
+			return mv;
+    	} 
+           try {			
+	System.out.println("Done from validation");			
+	User u = userDao.get(advert.getPostedBy());
+	advert.setUser(u);
+                               
+	advert = advertDao.create(advert);
+	for(Category c: advert.getCategories()){
 	            	c = categoryDao.get(c.getTitle());
 	            	c.getAdverts().add(advert);
 	            	categoryDao.update(c); //to maintain many to many relationship
 				
 	            }
-                    
-	            if (advert.getFilename().trim() != "" || advert.getFilename() != null) {
-					File directory;
-					String check = File.separator; // Checking if system is linux
-													// based or windows based by
-													// checking seprator used.
-					String path = null;
-					if (check.equalsIgnoreCase("\\")) {
-						path = servletContext.getRealPath("").replace("build\\", ""); // gives real path as Lab9/build/web/
-																					  // so we need to replace build in the path
-																							}
-
-					if (check.equalsIgnoreCase("/")) {
-						path = servletContext.getRealPath("").replace("build/", "");
-						path += "/"; // Adding trailing slash for Mac systems.
-					}
-					directory = new File(path + "\\" + advert.getFilename());
-					boolean temp = directory.exists();
-					if (!temp) {
-						temp = directory.mkdir();
-					}
-					if (temp) {
-						// We need to transfer to a file
-						CommonsMultipartFile photoInMemory = advert.getPhoto();
-
-						String fileName = photoInMemory.getOriginalFilename();
-						// could generate file names as well
-
-						File localFile = new File(directory.getPath(), fileName);
-
-						// move the file from memory to the file
-
-						photoInMemory.transferTo(localFile);
-						advert.setFilename(localFile.getPath());
-						System.out.println("File is stored at" + localFile.getPath());
-						System.out.print("registerNewUser");
-						Advert a = advertDao.create(advert);
+                        
+                     File file;
+			String path = null;
+			
+                        String photolink = null;    
+		    System.out.println("Path: "+path);
+			if(advert.getProductPicture()!=null){
+				System.out.println("Profile Picture is not empty");
+                                
+		        path = "/Users/Shailly/Documents/New_Project/src/main/webapp/resources/images/";
+			String fileNamewithExt  =System.currentTimeMillis()+advert.getProductPicture().getOriginalFilename();
+			file = new File(path + fileNamewithExt);
+		        String context = servletContext.getContextPath();
+		        advert.getProductPicture().transferTo(file);
+                        //user.getProfilePicture().transferTo(file);
+		        photolink = "/resources/images/"+fileNamewithExt;
+		        
+		        System.out.println("Link to photo: "+photolink);
+                        
+                        advert.setFilename(photolink);
+                        System.out.print("registerNewUser");
+			Advert a = advertDao.create(advert);
 
 					} else {
 						System.out.println("Failed to create directory!");
 					}
 					
-				}
+				
 				
 	            return new ModelAndView("advert-success", "advert", advert);
 	            

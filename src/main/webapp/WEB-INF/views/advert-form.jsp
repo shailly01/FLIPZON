@@ -40,7 +40,8 @@
 
 			<tr>
 				<td>Product Image:</td>
-				<td><input type="file" name="photo" required="required"/>
+				<td><input type="file" name="productPicture"/>
+				<font color="red"><form:errors path="productPicture"></form:errors></font>
 				</td>
 			</tr>
 			

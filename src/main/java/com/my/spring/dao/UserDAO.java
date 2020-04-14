@@ -46,22 +46,23 @@ public class UserDAO extends DAO {
 	}
         
         
-        public User getUserByUsername(String username) {
-                  
+        public User getU(String username) throws UserException  {
+              try{    
 		begin();
                 System.out.println("inside userDAO");
-		Query q = getSession().createQuery("from User u where u.username = :username");
+		Query q = getSession().createQuery("from User u where u.username= :username");
 		q.setString("username", username);
                 User u =(User) q.uniqueResult();
                 commit();
 		return u;
+              }catch (HibernateException e){
+                  rollback();
+                   throw new UserException("Could not obtain the username " + username + " " + e.getMessage());
+              }
                
 	}
         
-        
-        
-
-	public User register(User u)
+    public User register(User u)
 			throws UserException {
 		try {
 			begin();
@@ -101,6 +102,25 @@ public class UserDAO extends DAO {
 		}
 	}
         
-        
-
+       public Boolean checkEmail(String emailAddress)throws UserException{
+           try{
+            begin();
+            System.out.println("inside userDAO1111111111");
+            Query q = getSession().createQuery("from  Email e where e.emailAddress= :emailAddress");
+            q.setString("emailAddress", emailAddress);
+            Email e =(Email) q.uniqueResult();
+            commit();
+            if(e==null){
+            return Boolean.TRUE;
+	}
+		return Boolean.FALSE;
+	}
+       catch (HibernateException e){
+                  rollback();
+                   throw new UserException("Could not obtain the emailAddress " + emailAddress + " " + e.getMessage());
+              }
+}
+       
+       
+       
 }

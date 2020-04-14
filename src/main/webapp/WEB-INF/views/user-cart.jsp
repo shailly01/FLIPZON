@@ -37,7 +37,7 @@
             <c:forEach var="c" items="${carts}">  
                          <tr>
 		<td>${c.title}</td>			
-                <td><img height="150" width="150" src="${c.filename}" /></td>
+                <td><img height="150" width="150" src="${pageContext.request.contextPath}/${c.filename}"/></td>
                 <td>${c.totalprice}</td>
                <td>${c.quantity}</td> 
                 <%-- <td><input type="number" name="quantity" value= "${c.quantity}"/></td>--%>

@@ -10,91 +10,109 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.my.spring.pojo.User;
+import com.my.spring.pojo.Email;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserValidator implements Validator {
     
     
     @Autowired
 	@Qualifier("userDao")
-	UserDAO userDao;
+	 UserDAO userDAO;
+    
 
+    @Override
 	public boolean supports(Class aClass) {
 		return aClass.equals(User.class);
 	}
-
-	 private Pattern pattern;  
-	 private Matcher matcher;  
-	
 	 private static final 
 	 String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"  
 			   + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";    
 	 String STRING_PATTERN = "[a-zA-Z]+";  
-	
-			 
-			 
+         
+         String pattern1 = "^[a-zA-Z0-9]{6,10}$";
+  		 
+    @Override
 	public void validate(Object obj, Errors errors) {
-		User user = (User) obj;
+	 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "error.invalid.user", "First Name Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "error.invalid.user", "Last Name Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "error.invalid.user", "User Name Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.invalid.password", "Password Required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email.emailAddress", "error.invalid.email.emailAddress","Email Required");
+       
+        User newuser = (User) obj;
+
+                 if (errors.hasErrors()) {
+            return;//Skip the rest of the validation rules
+                }
+        
+	
+		try {
+			User u= userDAO.getU(newuser.getUsername());
+			if(u !=null)
+				errors.rejectValue("username", "error.invalid.user", "Username Already Exists");
+			
+		} catch (UserException e) {
+			System.err.println("Exception in User Validator");
+		} 
+                                
+                try {
+		 boolean e= userDAO.checkEmail(newuser.getEmail().getEmailAddress());
+			if(!e)
+				errors.rejectValue("email.emailAddress", "error.invalid.email.emailAddress", "Email Address Already Exists");
+			
+		} catch (UserException e) {
+			System.err.println("Exception in User Validator");
+		}
                 
-                
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "error.invalid.user", "First Name Required");
-		 if (!(user.getFirstName() != null && user.getFirstName().isEmpty())) {  
-			   pattern = Pattern.compile(STRING_PATTERN);  
-			   matcher = pattern.matcher(user.getFirstName());  
+                 if (!(newuser.getPassword() != null && newuser.getPassword().isEmpty())) {  
+                    System.out.println("password is "+ newuser.getPassword());
+			 Pattern pattern2 = Pattern.compile(pattern1);  
+			 Matcher  mat = pattern2.matcher(newuser.getPassword());
+			   if (!mat.matches()) {  
+			    errors.rejectValue("password", "password.containNonChar",  
+			      "Enter a valid password of strings");  
+			   }  
+			  }
+        
+        
+        
+                if (!(newuser.getFirstName() != null && newuser.getFirstName().isEmpty())) {  
+                    
+			 Pattern  pattern = Pattern.compile(STRING_PATTERN);  
+			   Matcher matcher = pattern.matcher(newuser.getFirstName());  
 			   if (!matcher.matches()) {  
 			    errors.rejectValue("firstName", "firstName.containNonChar",  
 			      "Enter a valid first name");  
 			   }  
 			  }  
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "error.invalid.user", "Last Name Required");
-		if (!(user.getLastName() != null && user.getLastName().isEmpty())) {  
-			   pattern = Pattern.compile(STRING_PATTERN);  
-			   matcher = pattern.matcher(user.getLastName());  
+		if (!(newuser.getLastName() != null && newuser.getLastName().isEmpty())) {  
+			 Pattern   pattern = Pattern.compile(STRING_PATTERN);  
+			 Matcher  matcher = pattern.matcher(newuser.getLastName());  
 			   if (!matcher.matches()) {  
 			    errors.rejectValue("lastName", "lastName.containNonChar",  
 			      "Enter a valid last name");  
 			   }  
 			  } 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "error.invalid.user", "User Name Required");
-		if (!(user.getUsername() != null && user.getUsername().isEmpty())) {  
-//                    User someUser=userDao.getUserByUsername(user.getUsername());
-//                if(someUser!=null){
-//       
-//			errors.rejectValue("username", "error.invalid.user", "Username Already Exists");
-//	
-//                }
-			   pattern = Pattern.compile(STRING_PATTERN);  
-			   matcher = pattern.matcher(user.getUsername());  
+		
+		if (!(newuser.getUsername() != null && newuser.getUsername().isEmpty())) {  
+			 Pattern   pattern = Pattern.compile(STRING_PATTERN);  
+			 Matcher  matcher = pattern.matcher(newuser.getUsername());  
 			   if (!matcher.matches()) {  
 			    errors.rejectValue("username", "username.containNonChar",  
 			      "Enter a valid username");  
 			   }  
 			  }
                 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.invalid.password", "Password Required");
-		if (!(user.getPassword() != null && user.getPassword().isEmpty())) {  
-			   pattern = Pattern.compile(STRING_PATTERN);  
-			   matcher = pattern.matcher(user.getPassword());  
-			   if (!matcher.matches()) {  
-			    errors.rejectValue("password", "password.containNonChar",  
-			      "Enter a valid password of strings");  
-			   }  
-			  }
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email.emailAddress", "error.invalid.email.emailAddress",
-				"Email Required");
-		 
-		if("NONE".equals(user.getUsertype())){
-			errors.rejectValue("usertype", "error.invalid.usertype","User type is required");
-		}
-		// check if user exists
-	
-                		
-		
-                
-                
+             if("NONE".equals(newuser.getUsertype())){
+            errors.rejectValue("usertype", "error.invalid.usertype","User type is required");
+                }
+       
                 
 	}
 }

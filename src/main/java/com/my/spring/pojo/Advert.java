@@ -18,8 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.springframework.web.multipart.MultipartFile;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+//import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Entity
 @Table(name="advert_table")
@@ -61,6 +62,12 @@ public class Advert {
 	
 	@Transient
 	int postedBy;
+        
+//        	@Transient
+//	private CommonsMultipartFile photo;
+        
+        @Transient
+	private MultipartFile productPicture;
 	
 	public String getFilename() {
 		return filename;
@@ -70,23 +77,34 @@ public class Advert {
 		this.filename = filename;
 	}
 
-	public CommonsMultipartFile getPhoto() {
-		return photo;
-	}
+//	public CommonsMultipartFile getPhoto() {
+//		return photo;
+//	}
+//
+//	public void setPhoto(CommonsMultipartFile photo) {
+//		this.photo = photo;
+//	}
 
-	public void setPhoto(CommonsMultipartFile photo) {
-		this.photo = photo;
-	}
+    public MultipartFile getProductPicture() {
+        return productPicture;
+    }
 
-	@Transient
-	private CommonsMultipartFile photo;
+    public void setProductPicture(MultipartFile productPicture) {
+        this.productPicture = productPicture;
+    }
+        
+        
+        
 
-    public Advert(String title, String message, User user, Category catergory, Cart cart) {
+
+
+    public Advert(String title, String message, User user, Category catergory, Cart cart,String filename) {
         this.title = title;
         this.message = message;
         this.user = user;      
         this.categories.add(catergory); 
         this.cart.add(cart);
+        this.filename = filename;
     }
 
     public Advert() {

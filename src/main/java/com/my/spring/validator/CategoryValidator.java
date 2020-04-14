@@ -10,6 +10,8 @@ import org.springframework.validation.Validator;
 import com.my.spring.dao.CategoryDAO;
 import com.my.spring.exception.CategoryException;
 import com.my.spring.pojo.Category;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class CategoryValidator implements Validator {
@@ -18,10 +20,17 @@ public class CategoryValidator implements Validator {
 	@Qualifier("categoryDao")
 	CategoryDAO categoryDAO;
 	
+        @Override
 	public boolean supports(Class aClass) {
 		return Category.class.equals(aClass);
 	}
+        
+        
+        private static final   
+	 String STRING_PATTERN = "[a-zA-Z]+";  
+        
 
+        @Override
 	public void validate(Object obj, Errors errors) {
 		Category newCategory = (Category) obj;
 
@@ -40,6 +49,16 @@ public class CategoryValidator implements Validator {
 		} catch (CategoryException e) {
 			System.err.println("Exception in Category Validator");
 		}
+                
+                
+                if (!(newCategory.getTitle() != null && newCategory.getTitle().isEmpty())) {  
+                    Pattern  pattern = Pattern.compile(STRING_PATTERN);  
+			   Matcher matcher = pattern.matcher(newCategory.getTitle());  
+			   if (!matcher.matches()) {  
+			    errors.rejectValue("title", "title.containNonChar",  
+			      "Enter a valid Category name");  
+			   }  
+			  }  
 		
 		
 		

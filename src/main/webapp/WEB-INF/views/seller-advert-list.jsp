@@ -43,7 +43,24 @@
                             <td><c:forEach var="categ" items="${adv.categories}">
                     	    ${categ}
                             </c:forEach></td>
-                            <td><img height="150" width="150" src="${adv.filename}" /></td>
+<!--                            <td><img height="150" width="150" src="${adv.filename}" /></td>-->
+                            
+                            <c:choose>
+				<c:when test="${adv.filename == null}">
+				</c:when>
+				<c:otherwise>
+				<td><img height="150" width="150"
+                                         src="${pageContext.request.contextPath}/${adv.filename}" /></td>
+					
+				</c:otherwise>
+			</c:choose>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             <td>${adv.price}</td>
                             <td><button value="edit" type="submit">Edit</button></td>
                             <td><a href="${contextPath}/advert/remove/${adv.id}.htm" ><button type="button">Remove</button></a></td>                        

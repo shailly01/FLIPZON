@@ -46,7 +46,7 @@
 				<td><c:forEach var="categ" items="${adv.categories}">
                     	${categ} , 
                     </c:forEach></td>
-                <td><img height="150" width="150" src="${adv.filename}" /></td>
+                <td><img height="150" width="150" src="${pageContext.request.contextPath}/${adv.filename}" /></td>
                 <td>${adv.price}</td>
                 
                 <td><form:select path="quantity" required="required">
