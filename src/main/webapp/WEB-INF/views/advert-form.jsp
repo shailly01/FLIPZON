@@ -34,7 +34,7 @@
 
 			<tr>
 				<td>Product Name:</td>
-				<td><form:input type="text" path="title" size="30" required="required"/>
+				<td><form:input type="text" path="title" size="30" required="required" name = "title"/>
 				<font color="red"><form:errors path="title" /></font></td>
 			</tr>
 
@@ -47,13 +47,13 @@
 			
 			<tr>
 				<td>Image Name:</td>
-				<td><form:input type="text" path="filename" required="required"/>
+				<td><form:input type="text" path="filename" required="required" name = "filename"/>
 				<font color="red"><form:errors path="filename" /></font></td>
 			</tr>
 			
 			<tr>
 				<td>Product Description:</td>
-				<td><form:input type="text" path="message" size="30" required="required"/>
+				<td><form:input type="text" path="message" size="30" required="required" name = "message"/>
 				<font color="red"><form:errors path="message" /></font></td>
 			</tr>
 			

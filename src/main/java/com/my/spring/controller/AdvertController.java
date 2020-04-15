@@ -26,6 +26,7 @@ import com.my.spring.pojo.Category;
 import com.my.spring.pojo.User;
 import com.my.spring.validator.AdvertValidator;
 import java.util.HashMap;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,8 +72,16 @@ public class AdvertController {
 		}
                  
 		@RequestMapping(value = "/advert/add", method = RequestMethod.POST)
-		public ModelAndView addCategory(@ModelAttribute("advert") Advert advert,@RequestParam("productPicture")MultipartFile productPicture, BindingResult result) throws Exception {
-               System.out.println("Sending to Validator");
+	public ModelAndView addCategory(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("advert") Advert advert,@RequestParam("productPicture")MultipartFile productPicture, BindingResult result) throws Exception {
+        
+              
+                 if("true"==request.getAttribute("unsafe_check")){
+                        ModelAndView mvc = null;
+                        mvc = new ModelAndView("securityerror");
+                        return mvc;
+                    } 
+                 
+                 System.out.println("Sending to Validator");
                advert.setProductPicture(productPicture);
                
 		validator.validate(advert, result);
@@ -82,14 +91,17 @@ public class AdvertController {
 			mv.addObject("advert", advert);
 			mv.setViewName("advert-form");
 			return mv;
-    	} 
-           try {			
-	System.out.println("Done from validation");			
-	User u = userDao.get(advert.getPostedBy());
-	advert.setUser(u);
-                               
-	advert = advertDao.create(advert);
-	for(Category c: advert.getCategories()){
+    	}
+                 
+
+			try {			
+				System.out.println("Done from validation");
+				User u = userDao.get(advert.getPostedBy());
+				advert.setUser(u);
+				advert = advertDao.create(advert);
+				
+	            
+	            for(Category c: advert.getCategories()){
 	            	c = categoryDao.get(c.getTitle());
 	            	c.getAdverts().add(advert);
 	            	categoryDao.update(c); //to maintain many to many relationship
@@ -112,7 +124,7 @@ public class AdvertController {
                         //user.getProfilePicture().transferTo(file);
 		        photolink = "/resources/images/"+fileNamewithExt;
 		        
-		        System.out.println("Link to photo: "+photolink);
+		       System.out.println("Link to photo: "+photolink);
                         
                         advert.setFilename(photolink);
                         System.out.print("registerNewUser");

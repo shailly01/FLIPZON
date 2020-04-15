@@ -74,10 +74,13 @@ public class BillController extends PDFView{
                 HttpSession session = (HttpSession) request.getSession();
 		User u = (User)session.getAttribute("user");
                 long id = u.getPersonID();
+                long cid = cart.getId();
 		List<Cart> view=cartDao.list(id);
-		model.addAttribute("cartitems", view);
+             	model.addAttribute("cartitems", view);
                 //return new ModelAndView("view","cartitems",view);
-                    for(Cart c : view){
+                   
+                
+                for(Cart c : view){
                     cartDao.delete(c);
                 }
                     

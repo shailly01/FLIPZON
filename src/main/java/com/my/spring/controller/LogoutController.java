@@ -16,7 +16,7 @@ import com.my.spring.dao.UserDAO;
 
 
 @Controller
-@RequestMapping("/advert/*")
+//@RequestMapping("/advert/*")
 public class LogoutController {
 
 	@Autowired
@@ -40,4 +40,5 @@ public class LogoutController {
         httpSession.invalidate();
         return "logout";
     }
+       
 }

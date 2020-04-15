@@ -22,17 +22,7 @@ public class CartDAO extends DAO {
 	
 	}
 
-//	public Cart insert(Cart cart) throws CartException {
-//		try{
-//			begin();            
-//			getSession().save(cart);     
-//            commit();
-//            return cart;
-//		} catch (HibernateException e){
-//			rollback();
-//            throw new CartException("Could not save the cart", e);
-//		}
-//	}
+
         
        public void delete(Cart cart)
             throws CartException {
@@ -67,7 +57,7 @@ public class CartDAO extends DAO {
     
    }
        
-public Cart insert(long id,User u,int quant) throws CartException {
+                public Cart insert(long id,User u,int quant) throws CartException {
                     
 		try{
                     begin(); 
@@ -177,6 +167,7 @@ public Cart insert(long id,User u,int quant) throws CartException {
             throw new CategoryException("Could not save the cart", e);
         }
     }
+        
 	
 
 }
