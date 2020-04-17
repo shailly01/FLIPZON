@@ -27,25 +27,37 @@
 			<td><b>Image</b></td>
 			<td><b>Price</b></td>
                         <td><b>Option</b></td>
+                        <td><b>Option</b></td>
 			
 		</tr>
                                
                 
                 
 		<c:forEach var="adv" items="${products}">
-                    <form action="${contextPath}/product/update/${adv.id}.htm" method="POST">
+                    <form action="${contextPath}/product/edit" method="get">
 			<tr>
                             
-                            <td><input type="text" name="title" value="${adv.title}"/></td>
-                            <td><input type="text" name="description" value="${adv.message}"/></td>
+                            <td>${adv.title}</td>
+                            <td>${adv.message}</td>
                             <td>${adv.user.username}</td>
                             <td><c:forEach var="categ" items="${adv.categories}">
                     	    ${categ}
                             </c:forEach></td>
-                            <td><img height="150" width="150" src="${pageContext.request.contextPath}/${adv.filename}"/></td>
-                            <td><input type="text" name="price" value= "${adv.price}"/></td>
+<!--                            <td><img height="150" width="150" src="${adv.filename}" /></td>-->
+                            
+                            <c:choose>
+				<c:when test="${adv.filename == null}">
+				</c:when>
+				<c:otherwise>
+				<td><img height="150" width="150"
+                                         src="${pageContext.request.contextPath}/${adv.filename}" /></td>
+					
+				</c:otherwise>
+			</c:choose>
+                         <td>${adv.price}</td>
                             <td><button value="edit" type="submit">Edit</button></td>
-                            </tr>
+                            <td><a href="${contextPath}/product/remove/${adv.id}.htm" ><button type="button">Remove</button></a></td>                        
+			</tr>
                         </form>
 
 		</c:forEach>

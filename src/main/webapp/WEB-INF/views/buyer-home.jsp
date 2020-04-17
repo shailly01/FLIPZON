@@ -12,13 +12,13 @@
 <body>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<form:form action="${contextPath}/advert/logout" method="post" commandName="advert">
+<form:form action="${contextPath}/product/logout" method="post" commandName="product">
 <input type="submit" value="Logout">
 </form:form>
 
 <h1>Welcome Customer, ${user.firstName} </h1>
 
-<a href="${contextPath}/advert/list" >View All Products</a> <br />
+<a href="${contextPath}/product/list" >View All Products</a> <br />
 <a href="${contextPath}/cart/customerlist" >View Cart</a> <br/>
 </body>
 </html>

@@ -25,7 +25,7 @@
         
 <interceptors>
     <interceptor>
-        <mapping path="/advert/add"/> 
+        <mapping path="/product/add"/> 
         <beans:bean class="com.my.spring.interceptor.ScriptingInterceptor">
 <!--        <beans:property name="logout" value="logout.jsp" />-->
         </beans:bean>

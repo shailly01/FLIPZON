@@ -10,11 +10,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.GenericGenerator;
 
-
 @Entity
 @Table(name = "email_table")
 public class Email {
-	
+
 	@Id
 	@GeneratedValue(generator = "generator")
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
@@ -28,8 +27,7 @@ public class Email {
 	@PrimaryKeyJoinColumn
 	private User user;
 
-	public Email() {
-	}
+	public Email() {}
 
 	public Email(String emailAddress) {
 		this.emailAddress = emailAddress;
@@ -58,7 +56,5 @@ public class Email {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-
 
 }

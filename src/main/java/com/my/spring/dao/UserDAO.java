@@ -9,11 +9,9 @@ import com.my.spring.pojo.User;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
- 
 public class UserDAO extends DAO {
 
-	public UserDAO() {
-	}
+	public UserDAO() {}
 
 	public User get(String username, String password) throws UserException {
 		try {
@@ -30,12 +28,12 @@ public class UserDAO extends DAO {
 			throw new UserException("Could not get user " + username, e);
 		}
 	}
-	
+
 	public User get(int userId) throws UserException {
 		try {
 			begin();
 			Query q = getSession().createQuery("from User where personID= :personID");
-			q.setInteger("personID", userId);		
+			q.setInteger("personID", userId);
 			User user = (User) q.uniqueResult();
 			commit();
 			return user;
@@ -44,26 +42,25 @@ public class UserDAO extends DAO {
 			throw new UserException("Could not get user " + userId, e);
 		}
 	}
-        
-        
-        public User getU(String username) throws UserException  {
-              try{    
-		begin();
-                System.out.println("inside userDAO");
-		Query q = getSession().createQuery("from User u where u.username= :username");
-		q.setString("username", username);
-                User u =(User) q.uniqueResult();
-                commit();
-		return u;
-              }catch (HibernateException e){
-                  rollback();
-                   throw new UserException("Could not obtain the username " + username + " " + e.getMessage());
-              }
-               
+
+	public User getU(String username) throws UserException {
+		try {
+			begin();
+			System.out.println("inside userDAO");
+			Query q = getSession().createQuery("from User u where u.username= :username");
+			q.setString("username", username);
+			User u = (User) q.uniqueResult();
+			commit();
+			return u;
+		} catch (HibernateException e) {
+			rollback();
+			throw new UserException("Could not obtain the username " + username + " " + e.getMessage());
+		}
+
 	}
-        
-    public User register(User u)
-			throws UserException {
+
+	public User register(User u)
+	throws UserException {
 		try {
 			begin();
 			System.out.println("inside DAO");
@@ -75,12 +72,11 @@ public class UserDAO extends DAO {
 			user.setLastName(u.getLastName());
 			user.setEmail(email);
 			email.setUser(user);
-                        if(u.getUsertype().equalsIgnoreCase("Buyer")){
-                            user.setActive("true");
-                        }
-                        else{
-                        user.setActive("false");
-                        }
+			if (u.getUsertype().equalsIgnoreCase("Buyer")) {
+				user.setActive("true");
+			} else {
+				user.setActive("false");
+			}
 			getSession().save(user);
 			commit();
 			return user;
@@ -101,26 +97,23 @@ public class UserDAO extends DAO {
 			throw new UserException("Could not delete user " + user.getUsername(), e);
 		}
 	}
-        
-       public Boolean checkEmail(String emailAddress)throws UserException{
-           try{
-            begin();
-            System.out.println("inside userDAO1111111111");
-            Query q = getSession().createQuery("from  Email e where e.emailAddress= :emailAddress");
-            q.setString("emailAddress", emailAddress);
-            Email e =(Email) q.uniqueResult();
-            commit();
-            if(e==null){
-            return Boolean.TRUE;
+
+	public Boolean checkEmail(String emailAddress) throws UserException {
+		try {
+			begin();
+			System.out.println("inside userDAO1111111111");
+			Query q = getSession().createQuery("from  Email e where e.emailAddress= :emailAddress");
+			q.setString("emailAddress", emailAddress);
+			Email e = (Email) q.uniqueResult();
+			commit();
+			if (e == null) {
+				return Boolean.TRUE;
+			}
+			return Boolean.FALSE;
+		} catch (HibernateException e) {
+			rollback();
+			throw new UserException("Could not obtain the emailAddress " + emailAddress + " " + e.getMessage());
+		}
 	}
-		return Boolean.FALSE;
-	}
-       catch (HibernateException e){
-                  rollback();
-                   throw new UserException("Could not obtain the emailAddress " + emailAddress + " " + e.getMessage());
-              }
-}
-       
-       
-       
+
 }

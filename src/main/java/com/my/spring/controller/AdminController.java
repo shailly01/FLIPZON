@@ -6,11 +6,11 @@
 package com.my.spring.controller;
 
 import com.my.spring.dao.AdminDAO;
-import com.my.spring.dao.AdvertDAO;
+import com.my.spring.dao.ProductDAO;
 import com.my.spring.dao.UserDAO;
-import com.my.spring.exception.AdvertException;
+import com.my.spring.exception.ProductException;
 import com.my.spring.exception.UserException;
-import com.my.spring.pojo.Advert;
+import com.my.spring.pojo.Product;
 import com.my.spring.pojo.User;
 import com.my.spring.pojo.Admin;
 import java.util.HashMap;
@@ -34,149 +34,138 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class AdminController {
-    
-                @Autowired
-		@Qualifier("advertDao")
-		AdvertDAO advertDao;
-    
-                @Autowired
-		@Qualifier("userDao")
-		UserDAO userDao;
-    
-                @Autowired
-                @Qualifier("adminDao")
-                AdminDAO adminDao;
-    
-                @Autowired
-		ServletContext servletContext;
-    
-                
-                
-        @RequestMapping(value = "/admin", method = RequestMethod.GET)
+
+	@Autowired
+	@Qualifier("productDao")
+	ProductDAO productDao;
+
+	@Autowired
+	@Qualifier("userDao")
+	UserDAO userDao;
+
+	@Autowired
+	@Qualifier("adminDao")
+	AdminDAO adminDao;
+
+	@Autowired
+	ServletContext servletContext;
+
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	protected String goToUserHome(HttpServletRequest request) throws Exception {
 		return "admin-home";
 	}
-                
-    
-    		@RequestMapping(value = "/admin/userlist", method = RequestMethod.GET)
-		public ModelAndView displayActiveUser(HttpServletRequest request) throws Exception {
 
-			try {
-                          List<User> users = adminDao.list();
-				return new ModelAndView("user-list", "users", users);
-				
-			} catch (UserException e) {
-				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
-			}
+	@RequestMapping(value = "/admin/userlist", method = RequestMethod.GET)
+	public ModelAndView displayActiveUser(HttpServletRequest request) throws Exception {
 
-		}
-                
-                @RequestMapping(value = "/admin/inactivelist", method = RequestMethod.GET)
-		public ModelAndView displayInactiveUser(HttpServletRequest request) throws Exception {
+		try {
+			List<User> users = adminDao.list();
+			return new ModelAndView("user-list", "users", users);
 
-			try {
-                          List<User> users = adminDao.inactivelist();
-				return new ModelAndView("inactive-seller-list", "users", users);
-				
-			} catch (UserException e) {
-				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
-			}
+		} catch (UserException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("error", "errorMessage", "error while login");
+		}
 
+	}
+
+	@RequestMapping(value = "/admin/inactivelist", method = RequestMethod.GET)
+	public ModelAndView displayInactiveUser(HttpServletRequest request) throws Exception {
+
+		try {
+			List<User> users = adminDao.inactivelist();
+			return new ModelAndView("inactive-seller-list", "users", users);
+
+		} catch (UserException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("error", "errorMessage", "error while login");
 		}
-                
-                
-                
-                @RequestMapping(value = "/admin/remove/*", method = RequestMethod.GET)
-		public ModelAndView removeUser(HttpServletRequest request) throws Exception {
-                
-            String url = request.getRequestURI();
-            long id = 0;
-                id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
-                   try {
-                   User u = adminDao.deleteUser(id);
-                          List<User> users = adminDao.list();
-                           return new ModelAndView("user-list", "users", users);
-                    } catch (UserException e) {
-				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
-			}	
+
+	}
+
+	@RequestMapping(value = "/admin/remove/*", method = RequestMethod.GET)
+	public ModelAndView removeUser(HttpServletRequest request) throws Exception {
+
+		String url = request.getRequestURI();
+		long id = 0;
+		id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
+		try {
+			User u = adminDao.deleteUser(id);
+			List<User> users = adminDao.list();
+			return new ModelAndView("user-list", "users", users);
+		} catch (UserException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("error", "errorMessage", "error while login");
 		}
-                
-                @RequestMapping(value = "/admin/approve/*", method = RequestMethod.POST)
-		public ModelAndView approveSeller(HttpServletRequest request) throws Exception {
-                
-                String url = request.getRequestURI();
-                long id = 0;
-                id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
-                   try {
-                       
-                    Map<String, String> status = new HashMap<>();
-                    status.put("active","true");
-                    
-                    User u = adminDao.updateUserA(id, status); 
-                   Email email= new SimpleEmail();
-	           email.setHostName("smtp.googlemail.com");
-	           email.setSmtpPort(465);
-	           email.setAuthentication("shaillyj6@gmail.com", "Abc123$$");
-	           email.setSSLOnConnect(true);
-                   email.setFrom(u.getEmail().getEmailAddress());
-	           email.setSubject("Sign Up Successful");
-	           email.setMsg("Welcome to the flipzon Store\n\n Your account has been successfully created.");
-	           email.addTo(u.getEmail().getEmailAddress());
-	           email.send();
-                    List<User> users = adminDao.inactivelist();
-		    return new ModelAndView("inactive-seller-list", "users", users);
-                    } catch (UserException e) {
-				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
-			}	
+	}
+
+	@RequestMapping(value = "/admin/approve/*", method = RequestMethod.POST)
+	public ModelAndView approveSeller(HttpServletRequest request) throws Exception {
+
+		String url = request.getRequestURI();
+		long id = 0;
+		id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
+		try {
+
+			Map<String, String> status = new HashMap<>();
+			status.put("active", "true");
+
+			User u = adminDao.updateUserA(id, status);
+			Email email = new SimpleEmail();
+			email.setHostName("smtp.googlemail.com");
+			email.setSmtpPort(465);
+			email.setAuthentication("shaillyj6@gmail.com", "Abc123$$");
+			email.setSSLOnConnect(true);
+			email.setFrom(u.getEmail().getEmailAddress());
+			email.setSubject("Sign Up Successful");
+			email.setMsg("Welcome to the flipzon Store\n\n Your account has been successfully created.");
+			email.addTo(u.getEmail().getEmailAddress());
+			email.send();
+			List<User> users = adminDao.inactivelist();
+			return new ModelAndView("inactive-seller-list", "users", users);
+		} catch (UserException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("error", "errorMessage", "error while login");
 		}
-                
-                
-                
-                @RequestMapping(value = "/admin/reject/*", method = RequestMethod.GET)
-		public ModelAndView rejectSeller(HttpServletRequest request) throws Exception {
-                
-            String url = request.getRequestURI();
-            long id = 0;
-                id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
-                   try {
-                       
-                    Map<String, String> status = new HashMap<>();
-                    status.put("active","Reject");
-                    User u = adminDao.updateUserR(id, status); 
-                    List<User> users = adminDao.rejectlist();
-                           return new ModelAndView("reject-seller", "users", users);
-                    } catch (UserException e) {
-				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
-			}	
+	}
+
+	@RequestMapping(value = "/admin/reject/*", method = RequestMethod.GET)
+	public ModelAndView rejectSeller(HttpServletRequest request) throws Exception {
+
+		String url = request.getRequestURI();
+		long id = 0;
+		id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
+		try {
+
+			Map<String, String> status = new HashMap<>();
+			status.put("active", "Reject");
+			User u = adminDao.updateUserR(id, status);
+			List<User> users = adminDao.rejectlist();
+			return new ModelAndView("reject-seller", "users", users);
+		} catch (UserException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("error", "errorMessage", "error while login");
 		}
-                
-                
-                @RequestMapping(value = "/admin/rejectlist", method = RequestMethod.GET)
-		public ModelAndView rejectSellerlist(HttpServletRequest request) throws Exception {
-                   try {
-                            List<User> users = adminDao.rejectlist();
-                           return new ModelAndView("reject-seller", "users", users);
-                    } catch (UserException e) {
-				System.out.println(e.getMessage());
-				return new ModelAndView("error", "errorMessage", "error while login");
-			}	
+	}
+
+	@RequestMapping(value = "/admin/rejectlist", method = RequestMethod.GET)
+	public ModelAndView rejectSellerlist(HttpServletRequest request) throws Exception {
+		try {
+			List<User> users = adminDao.rejectlist();
+			return new ModelAndView("reject-seller", "users", users);
+		} catch (UserException e) {
+			System.out.println(e.getMessage());
+			return new ModelAndView("error", "errorMessage", "error while login");
 		}
-                
-                
-                
-                @RequestMapping(value = "/admin/productlist", method = RequestMethod.GET)
-		public ModelAndView showProduct(HttpServletRequest request) throws Exception {
-                        
-			ModelAndView mav = new ModelAndView("product-list");
-			List<Advert> adverts = advertDao.list();
-                        mav.addObject("adverts", adverts);
-                        return mav;
-                }
-                                
-    
+	}
+
+	@RequestMapping(value = "/admin/productlist", method = RequestMethod.GET)
+	public ModelAndView showProduct(HttpServletRequest request) throws Exception {
+
+		ModelAndView mav = new ModelAndView("product-list-admin");
+		List<Product> products = productDao.list();
+		mav.addObject("products", products);
+		return mav;
+	}
+
 }

@@ -17,7 +17,7 @@
   <mapping class="com.my.spring.pojo.User"/>
   <mapping class="com.my.spring.pojo.Email"/>
   <mapping class="com.my.spring.pojo.Category"/>
-  <mapping class="com.my.spring.pojo.Advert"/>
+  <mapping class="com.my.spring.pojo.Product"/>
   <mapping class="com.my.spring.pojo.Cart"/>
   <mapping class="com.my.spring.pojo.Admin"/>
  

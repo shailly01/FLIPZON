@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "personID")
 public class User extends Person {
 
-	@Column(name = "username", unique=true)
+	@Column(name = "username", unique = true)
 	private String username;
 
 	@Column(name = "password")
@@ -26,24 +26,13 @@ public class User extends Person {
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Email email;
-	
-//	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//	private Cart cart;
-//	
-//	public Cart getCart() {
-//		return cart;
-//	}
-//
-//	public void setCart(Cart cart) {
-//		this.cart = cart;
-//	}
 
 	@Column(name = "usertype")
 	private String usertype;
-        
-        @Column(name = "isactive")
+
+	@Column(name = "isactive")
 	private String active;
-	
+
 	public User(String username, String password, String usertype) {
 		this.username = username;
 		this.password = password;
@@ -51,7 +40,7 @@ public class User extends Person {
 	}
 
 	public User() {
-            
+
 	}
 
 	public String getUsertype() {
@@ -86,17 +75,12 @@ public class User extends Person {
 		this.email = email;
 	}
 
-    public String getActive() {
-        return active;
-    }
+	public String getActive() {
+		return active;
+	}
 
-    public void setActive(String active) {
-        this.active = active;
-    }
+	public void setActive(String active) {
+		this.active = active;
+	}
 
-
-        
-        
-
-	
 }

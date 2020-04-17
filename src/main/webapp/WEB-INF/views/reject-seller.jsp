@@ -25,7 +25,7 @@
 			<td><b>UserName</b></td>
 			<td><b>Email</b></td>
 			<td><b>Type</b></td>
-			<td><b>Active</b></td>
+			<td><b>Status</b></td>
 			
 		</tr>
                                

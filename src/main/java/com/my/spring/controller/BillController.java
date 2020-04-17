@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.AbstractController;
 
-import com.my.spring.dao.AdvertDAO;
+import com.my.spring.dao.ProductDAO;
 import com.my.spring.dao.CartDAO;
 import com.my.spring.dao.CategoryDAO;
 import com.my.spring.dao.DAO;
@@ -38,55 +38,51 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 @Controller
 @RequestMapping("/cart/*")
-public class BillController extends PDFView{
+public class BillController extends PDFView {
 
 	//private static final Logger logger = LoggerFactory.getLogger(BillController.class);
-	
+
 	@Autowired
-	@Qualifier("advertDao")
-	AdvertDAO advertDao;
-	
+	@Qualifier("productDao")
+	ProductDAO productDao;
+
 	@Autowired
 	@Qualifier("categoryDao")
 	CategoryDAO categoryDao;
-	
+
 	@Autowired
 	@Qualifier("userDao")
 	UserDAO userDao;
-	
+
 	@Autowired
 	@Qualifier("cartDao")
 	CartDAO cartDao;
-	
+
 	@Autowired
 	ServletContext servletContext;
-	
-	
+
 	@RequestMapping(value = "/cart/checkout", method = RequestMethod.POST)
 	public ModelAndView showPdfReport(@ModelAttribute("cart") Cart cart,
-									  ModelMap model,
-			                          BindingResult result, 
-			                          HttpServletRequest request) throws Exception
-	{
-                HttpSession session = (HttpSession) request.getSession();
-		User u = (User)session.getAttribute("user");
-                long id = u.getPersonID();
-                long cid = cart.getId();
-		List<Cart> view=cartDao.list(id);
-             	model.addAttribute("cartitems", view);
-                //return new ModelAndView("view","cartitems",view);
-                   
-                
-                for(Cart c : view){
-                    cartDao.delete(c);
-                }
-                    
+		ModelMap model,
+		BindingResult result,
+		HttpServletRequest request) throws Exception {
+		HttpSession session = (HttpSession) request.getSession();
+		User u = (User) session.getAttribute("user");
+		long id = u.getPersonID();
+		long cid = cart.getId();
+		List<Cart> view = cartDao.list(id);
+		model.addAttribute("cartitems", view);
+		//return new ModelAndView("view","cartitems",view);
+
+		for (Cart c: view) {
+			cartDao.delete(c);
+		}
+
 		View v = new PDFView();
 		return new ModelAndView(v);
-        
+
 	}
-	
+
 }

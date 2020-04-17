@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>List Adverts</title>
+<title>List Products</title>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
@@ -14,7 +14,7 @@
  	<a href="${contextPath}/"><input type="submit" value="Logout"></a><br/><br> 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-	<a href="${contextPath}/user/">Seller Home</a><br/>
+	<a href="${contextPath}/admin/">Admin Home</a><br/>
 	<br>
 
 	
@@ -26,15 +26,13 @@
 			<td><b>Category</b></td>
 			<td><b>Image</b></td>
 			<td><b>Price</b></td>
-                        <td><b>Option</b></td>
-                        <td><b>Option</b></td>
 			
 		</tr>
                                
                 
                 
-		<c:forEach var="adv" items="${adverts}">
-                    <form action="${contextPath}/advert/edit" method="get">
+		<c:forEach var="adv" items="${products}">
+                   
 			<tr>
                             
                             <td>${adv.title}</td>
@@ -43,31 +41,10 @@
                             <td><c:forEach var="categ" items="${adv.categories}">
                     	    ${categ}
                             </c:forEach></td>
-<!--                            <td><img height="150" width="150" src="${adv.filename}" /></td>-->
-                            
-                            <c:choose>
-				<c:when test="${adv.filename == null}">
-				</c:when>
-				<c:otherwise>
-				<td><img height="150" width="150"
-                                         src="${pageContext.request.contextPath}/${adv.filename}" /></td>
-					
-				</c:otherwise>
-			</c:choose>
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                            <td><img height="150" width="150" src="${pageContext.request.contextPath}/${adv.filename}"/></td>
                             <td>${adv.price}</td>
-                            <td><button value="edit" type="submit">Edit</button></td>
-                            <td><a href="${contextPath}/advert/remove/${adv.id}.htm" ><button type="button">Remove</button></a></td>                        
-			</tr>
-                        </form>
-
-		</c:forEach>
+                            </tr>
+                        </c:forEach>
 	</table>
 	
 </body>

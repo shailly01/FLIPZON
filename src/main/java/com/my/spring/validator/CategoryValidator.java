@@ -19,49 +19,42 @@ public class CategoryValidator implements Validator {
 	@Autowired
 	@Qualifier("categoryDao")
 	CategoryDAO categoryDAO;
-	
-        @Override
+
+	@Override
 	public boolean supports(Class aClass) {
 		return Category.class.equals(aClass);
 	}
-        
-        
-        private static final   
-	 String STRING_PATTERN = "[a-zA-Z]+";  
-        
 
-        @Override
+	private static final
+	String STRING_PATTERN = "[a-zA-Z]+";
+
+	@Override
 	public void validate(Object obj, Errors errors) {
 		Category newCategory = (Category) obj;
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "error.invalid.category", "Category Required");
-		
+
 		if (errors.hasErrors()) {
-            return;//Skip the rest of the validation rules
-        }
-        
-	
+			return; //Skip the rest of the validation rules
+		}
+
 		try {
 			Category c = categoryDAO.get(newCategory.getTitle());
-			if(c !=null)
+			if (c != null)
 				errors.rejectValue("title", "error.invalid.category", "Category already Exists");
-			
+
 		} catch (CategoryException e) {
 			System.err.println("Exception in Category Validator");
 		}
-                
-                
-                if (!(newCategory.getTitle() != null && newCategory.getTitle().isEmpty())) {  
-                    Pattern  pattern = Pattern.compile(STRING_PATTERN);  
-			   Matcher matcher = pattern.matcher(newCategory.getTitle());  
-			   if (!matcher.matches()) {  
-			    errors.rejectValue("title", "title.containNonChar",  
-			      "Enter a valid Category name");  
-			   }  
-			  }  
-		
-		
-		
-	
+
+		if (!(newCategory.getTitle() != null && newCategory.getTitle().isEmpty())) {
+			Pattern pattern = Pattern.compile(STRING_PATTERN);
+			Matcher matcher = pattern.matcher(newCategory.getTitle());
+			if (!matcher.matches()) {
+				errors.rejectValue("title", "title.containNonChar",
+					"Enter a valid Category name");
+			}
+		}
+
 	}
 }

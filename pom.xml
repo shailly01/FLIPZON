@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.my</groupId>
-    <artifactId>New_Project</artifactId>
+    <artifactId>FlipZon_FinalProject</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>New_Project</name>
+    <name>FlipZon_FinalProject</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

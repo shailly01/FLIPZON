@@ -5,22 +5,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Add Advert Form</title>
+<title>Add Product Form</title>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 	<a href="${contextPath}/user/">Seller Home</a><br/>
 
-	<h2>Posting a New Advert</h2>
+	<h2>Posting a New Product</h2>
 
 
-	<form:form action="${contextPath}/advert/add" method="post"
-		commandName="advert" enctype="multipart/form-data">
+	<form:form action="${contextPath}/product/add" method="post"
+		commandName="product" enctype="multipart/form-data">
 
 		<table>
 			<tr>
-				<td>Poster Name:</td>
+				<td>Seller Name:</td>
 				<td>${sessionScope.user.username}</td>
 				<td><form:hidden path="postedBy"
 						value="${sessionScope.user.personID}" /></td>
@@ -64,7 +64,7 @@
 			</tr>
 
 			<tr>
-				<td colspan="2"><input type="submit" value="Post Advert" /></td>
+				<td colspan="2"><input type="submit" value="Post Product" /></td>
 			</tr>
 		</table>
 

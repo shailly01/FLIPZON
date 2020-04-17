@@ -13,32 +13,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "admin_table")
-public class Admin implements Serializable{
-    
-        @Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "adminID", unique=true, nullable = false)
+public class Admin implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "adminID", unique = true, nullable = false)
 	private long adminID;
 
-	@Column(name = "userName",unique=true)
+	@Column(name = "userName", unique = true)
 	private String username;
 
 	@Column(name = "password")
 	private String password;
 
-//	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//	private Email email;
-	
-
 	@Column(name = "usertype")
 	private String usertype;
-        
-        @Column(name = "isactive")
+
+	@Column(name = "isactive")
 	private String isactive;
-	
+
 	public Admin(String username, String password, String usertype) {
 		this.username = username;
 		this.password = password;
@@ -46,21 +41,17 @@ public class Admin implements Serializable{
 	}
 
 	public Admin() {
-            
+
 	}
 
-    public long getAdminID() {
-        return adminID;
-    }
+	public long getAdminID() {
+		return adminID;
+	}
 
-    public void setAdminID(long adminID) {
-        this.adminID = adminID;
-    }
+	public void setAdminID(long adminID) {
+		this.adminID = adminID;
+	}
 
-        
-        
-        
-        
 	public String getUsertype() {
 		return usertype;
 	}
@@ -85,16 +76,12 @@ public class Admin implements Serializable{
 		this.password = password;
 	}
 
+	public String isIsactive() {
+		return isactive;
+	}
 
-    public String isIsactive() {
-        return isactive;
-    }
+	public void setIsactive(String isactive) {
+		this.isactive = isactive;
+	}
 
-    public void setIsactive(String isactive) {
-        this.isactive = isactive;
-    }
-        
-        
-
-	
 }

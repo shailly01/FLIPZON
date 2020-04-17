@@ -9,7 +9,7 @@
 </head>
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<form:form action="${contextPath}/advert/logout" method="post" commandName="advert">
+<form:form action="${contextPath}/product/logout" method="post" commandName="product">
 <input type="submit" value="Logout">
 </form:form>
 

@@ -9,15 +9,15 @@
 </head>
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<form:form action="${contextPath}/advert/logout" method="post" commandName="advert">
+<form:form action="${contextPath}/product/logout" method="post" commandName="product">
 <input type="submit" value="Logout">
 </form:form>
 
     <h1>Welcome Seller, ${user.firstName} </h1>
 
 <a href="${contextPath}/category/add" >Add a Product Category</a> <br />
-<a href="${contextPath}/advert/add" >Add the Product Description</a> <br />
-<a href="${contextPath}/advert/sellerlist" >View All Products</a> <br />
+<a href="${contextPath}/product/add" >Add the Product Description</a> <br />
+<a href="${contextPath}/product/sellerlist" >View All Products</a> <br />
 
 
 </body>

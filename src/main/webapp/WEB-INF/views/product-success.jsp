@@ -6,13 +6,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Advert Created Successfully</title>
+<title>Product Created Successfully</title>
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 	<a href="${contextPath}/user/">Home</a><br/>
 
-	<h2>Advert Posted Successfully: ${advert.title}</h2>
+	<h2>Product Posted Successfully: ${product.title}</h2>
 </body>
 </html>

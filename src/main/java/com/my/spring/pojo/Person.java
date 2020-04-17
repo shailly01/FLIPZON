@@ -10,25 +10,25 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="person_table")
-@Inheritance(strategy=InheritanceType.JOINED) //table per subclass
+@Table(name = "person_table")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "personID", unique=true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "personID", unique = true, nullable = false)
 	private long personID;
-	
+
 	@Column(name = "firstName")
 	private String firstName;
-	
-	@Column(name ="lastName")
+
+	@Column(name = "lastName")
 	private String lastName;
-	
-	public Person(){
+
+	public Person() {
 
 	}
-	
+
 	public long getPersonID() {
 		return personID;
 	}
@@ -53,5 +53,4 @@ public class Person {
 		this.lastName = lastName;
 	}
 
-	
 }

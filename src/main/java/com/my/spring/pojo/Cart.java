@@ -23,60 +23,55 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-
 @Entity
-@Table(name="cart_table")
-//@PrimaryKeyJoinColumn(name = "personID")
-public class Cart{
+@Table(name = "cart_table")
+
+public class Cart {
 
 	@Id
-       @GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@GeneratedValue(generator = "generator")
-//      @GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	@Column(name = "cartID", unique = true, nullable = false)
 	private long id;
-	
-//	@OneToOne
-//	@PrimaryKeyJoinColumn
-//	private User user;
-        
-        @OneToOne
-	private User user;
-	
-	@ManyToMany
-    @JoinTable (
-       name="cart_advert_table",
-       joinColumns = {@JoinColumn(name="cartID", nullable = false, updatable = false, referencedColumnName="cartID")},
-       inverseJoinColumns = {@JoinColumn(name="advertID", referencedColumnName="advertID" )}
-    )
-	private Set<Advert> adverts = new HashSet<Advert>();
-	
-	@Column(name="title")
-	private String title;
-	
-	@Column(name="filename")
-	private String filename;
-	
-	@Column(name="totalprice")
-	private Float totalprice;
-        
-        @Column(name = "quantity")
-        private int quantity;
-        
-//        @Column(name = "finalPrice")
-//        private Float finalPrice;
 
-	public Cart(){
-		
+	@OneToOne
+	private User user;
+
+	@ManyToMany
+	@JoinTable(
+		name = "cart_product_table",
+		joinColumns = {
+			@JoinColumn(name = "cartID", nullable = false, updatable = false, referencedColumnName = "cartID")
+		},
+		inverseJoinColumns = {
+			@JoinColumn(name = "productID", referencedColumnName = "productID")
+		}
+	)
+	private Set<Product> products = new HashSet<Product> ();
+
+	@Column(name = "title")
+	private String title;
+
+	@Column(name = "filename")
+	private String filename;
+
+	@Column(name = "totalprice")
+	private Float totalprice;
+
+	@Column(name = "quantity")
+	private int quantity;
+
+	public Cart() {
+
 	}
-	
-	public Cart(String title, User user,String filename, Float totalprice,int quantity,Float finalPrice) {
+
+	public Cart(String title, User user, String filename, Float totalprice, int quantity, Float finalPrice) {
 		this.title = title;
 		this.filename = filename;
 		this.totalprice = totalprice;
-                this.user = user;
-                this.quantity = quantity;
-                //this.finalPrice = finalPrice;
+		this.user = user;
+		this.quantity = quantity;
+		//this.finalPrice = finalPrice;
 	}
 
 	public long getId() {
@@ -95,12 +90,12 @@ public class Cart{
 		this.user = user;
 	}
 
-	public Set<Advert> getAdverts() {
-		return adverts;
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	public void setAdverts(Set<Advert> adverts) {
-		this.adverts = adverts;
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 
 	public String getTitle() {
@@ -111,7 +106,6 @@ public class Cart{
 		this.title = title;
 	}
 
-
 	public String getFilename() {
 		return filename;
 	}
@@ -120,31 +114,20 @@ public class Cart{
 		this.filename = filename;
 	}
 
-    public Float getTotalprice() {
-        return totalprice;
-    }
+	public Float getTotalprice() {
+		return totalprice;
+	}
 
-    public void setTotalprice(Float totalprice) {
-        this.totalprice = totalprice;
-    }
+	public void setTotalprice(Float totalprice) {
+		this.totalprice = totalprice;
+	}
 
-    public int getQuantity() {
-        return quantity;
-    }
+	public int getQuantity() {
+		return quantity;
+	}
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-//    public Float getFinalPrice() {
-//        return finalPrice;
-//    }
-//
-//    public void setFinalPrice(Float finalPrice) {
-//        this.finalPrice = finalPrice;
-//    }
-//    
-    
-    
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 }

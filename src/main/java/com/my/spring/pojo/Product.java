@@ -20,29 +20,27 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
-//import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 @Entity
-@Table(name="advert_table")
-public class Advert {
+@Table(name = "product_table")
+public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="advertID", unique = true, nullable = false)
-    private long id;
-	
-	@Column(name="title")
-    private String title;
-	
-	@Column(name="message")
-    private String message;
-	
+	@Column(name = "productID", unique = true, nullable = false)
+	private long id;
+
+	@Column(name = "title")
+	private String title;
+
+	@Column(name = "message")
+	private String message;
+
 	@Column(name = "filename")
-	private String filename; 
-	
+	private String filename;
+
 	@Column(name = "price")
 	private Float price;
-	
+
 	public Float getPrice() {
 		return price;
 	}
@@ -53,22 +51,19 @@ public class Advert {
 
 	@ManyToOne
 	private User user;
-	
-	@ManyToMany(mappedBy="adverts")
-	private Set<Category> categories = new HashSet<Category>();
-	
-	@ManyToMany(mappedBy="adverts")
-	private Set<Cart> cart = new HashSet<Cart>();
-	
+
+	@ManyToMany(mappedBy = "products")
+	private Set<Category> categories = new HashSet<Category> ();
+
+	@ManyToMany(mappedBy = "products")
+	private Set<Cart> cart = new HashSet<Cart> ();
+
 	@Transient
 	int postedBy;
-        
-//        	@Transient
-//	private CommonsMultipartFile photo;
-        
-        @Transient
+
+	@Transient
 	private MultipartFile productPicture;
-	
+
 	public String getFilename() {
 		return filename;
 	}
@@ -77,38 +72,24 @@ public class Advert {
 		this.filename = filename;
 	}
 
-//	public CommonsMultipartFile getPhoto() {
-//		return photo;
-//	}
-//
-//	public void setPhoto(CommonsMultipartFile photo) {
-//		this.photo = photo;
-//	}
+	public MultipartFile getProductPicture() {
+		return productPicture;
+	}
 
-    public MultipartFile getProductPicture() {
-        return productPicture;
-    }
+	public void setProductPicture(MultipartFile productPicture) {
+		this.productPicture = productPicture;
+	}
 
-    public void setProductPicture(MultipartFile productPicture) {
-        this.productPicture = productPicture;
-    }
-        
-        
-        
+	public Product(String title, String message, User user, Category catergory, Cart cart, String filename) {
+		this.title = title;
+		this.message = message;
+		this.user = user;
+		this.categories.add(catergory);
+		this.cart.add(cart);
+		this.filename = filename;
+	}
 
-
-
-    public Advert(String title, String message, User user, Category catergory, Cart cart,String filename) {
-        this.title = title;
-        this.message = message;
-        this.user = user;      
-        this.categories.add(catergory); 
-        this.cart.add(cart);
-        this.filename = filename;
-    }
-
-    public Advert() {
-    }
+	public Product() {}
 
 	public long getId() {
 		return id;
@@ -158,17 +139,12 @@ public class Advert {
 		this.postedBy = postedBy;
 	}
 
-    public Set<Cart> getCart() {
-        return cart;
-    }
+	public Set<Cart> getCart() {
+		return cart;
+	}
 
-    public void setCart(Set<Cart> cart) {
-        this.cart = cart;
-    }
+	public void setCart(Set<Cart> cart) {
+		this.cart = cart;
+	}
 
-        
-    
-  
-
-   
 }

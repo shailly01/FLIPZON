@@ -8,7 +8,7 @@
     </head>
     <body>
         <h1>Use of Unafe String Literal Not Allowed</h1>
-        <a href="../advert/add">Click Here To Go Back To Home Page</a>
+        <a href="../product/add">Click Here To Go Back To Home Page</a>
         
     </body>
 </html>

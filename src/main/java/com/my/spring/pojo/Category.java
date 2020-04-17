@@ -14,33 +14,35 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="category_table")
+@Table(name = "category_table")
 public class Category {
 
-	@Id 
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="categoryID", unique = true, nullable = false)
-    private long categoryId;
-	
-	@Column(name="title", unique=true, nullable = false)
-    private String title;
-    
+	@Column(name = "categoryID", unique = true, nullable = false)
+	private long categoryId;
+
+	@Column(name = "title", unique = true, nullable = false)
+	private String title;
+
 	@ManyToMany
-    @JoinTable (
-       name="category_advert_table",
-       joinColumns = {@JoinColumn(name="categoryID", nullable = false, updatable = false, referencedColumnName="categoryID")},
-       inverseJoinColumns = {@JoinColumn(name="advertID", referencedColumnName="advertID" )}
-    )
-	private Set<Advert> adverts = new HashSet<Advert>();
+	@JoinTable(
+		name = "category_product_table",
+		joinColumns = {
+			@JoinColumn(name = "categoryID", nullable = false, updatable = false, referencedColumnName = "categoryID")
+		},
+		inverseJoinColumns = {
+			@JoinColumn(name = "productID", referencedColumnName = "productID")
+		}
+	)
+	private Set<Product> products = new HashSet<Product> ();
 
-    public Category(String title) {
-        this.title = title;
-    }
+	public Category(String title) {
+		this.title = title;
+	}
 
-    public Category() {
-    }
+	public Category() {}
 
 	public long getCategoryId() {
 		return categoryId;
@@ -58,16 +60,16 @@ public class Category {
 		this.title = title;
 	}
 
-	public Set<Advert> getAdverts() {
-		return adverts;
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	public void setAdverts(Set<Advert> adverts) {
-		this.adverts = adverts;
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 
-	@Override 
-	public String toString(){
+	@Override
+	public String toString() {
 		return title;
 	}
 }

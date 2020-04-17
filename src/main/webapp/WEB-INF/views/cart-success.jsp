@@ -18,7 +18,7 @@
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
         
         <h2>Product Added to Cart Successfully</h2>
-	<a href="../../advert/list">Back</a><br/>
+	<a href="../../product/list">Back</a><br/>
         <a href="${contextPath}/cart/customerlist" >View Cart</a> <br/>
 
 </body>
