@@ -118,7 +118,7 @@ public class AdminController {
 			email.setSSLOnConnect(true);
 			email.setFrom(u.getEmail().getEmailAddress());
 			email.setSubject("Sign Up Successful");
-			email.setMsg("Welcome to the flipzon Store\n\n Your account has been successfully created.");
+			email.setMsg("Your account has been Activate Successfully.");
 			email.addTo(u.getEmail().getEmailAddress());
 			email.send();
 			List<User> users = adminDao.inactivelist();

@@ -6,14 +6,15 @@
 <html>
 <head>
 <title>Add Category Form</title>
+<link href="<c:url value="/resources/CSS/mvp.css" />" rel="stylesheet">
 </head>
 <body>
 
 
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-	<a href="${contextPath}/user/">Seller Home</a><br/>
-
+        <a href="${contextPath}/user/" style = "margin-left: 30px;"><button type ="button">Seller Home</button></a><br/>
+ <div style="margin-top: 50px; margin-left: 50px;">
 	<h2>Add a New Category</h2>
 
 
@@ -27,11 +28,11 @@
 			</tr>
 
 			<tr>
-				<td colspan="2"><input type="submit" value="Create Category" /></td>
+                            <td colspan="2"><button type = "submit" class="btn btn-info" style = "width: 200px;"value="Create Category">Create Category</button></td>
 			</tr>
 		</table>
 
 	</form:form>
-
+ </div>
 </body>
 </html>

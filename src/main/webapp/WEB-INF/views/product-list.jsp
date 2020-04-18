@@ -9,11 +9,13 @@
 <title>List Products</title>
 </head>
 <body>
+    <div style="margin-top: 10px; margin-left: 1200px;">
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-	<a href="${contextPath}/"><input type="submit" value="Logout"></a><br/><br>
-	<br>
+	<a href="${contextPath}/"><button type="submit" class="btn btn-info" value="Logout">Logout</button></a><br/><br>
+	 </div>
         
+          <div style="margin-top: 10px; margin-left: 50px;">
         <a href="${contextPath}/user/buyer">Customer Home</a><br/>
         <br>
         
@@ -34,12 +36,6 @@
       <c:forEach var="adv" items="${products}">
 	<form:form action="${contextPath}/cart/insert/${adv.id}.htm" method="post" commandName="cart">
 
-		
-		<%--<form:hidden path="title" value="${adv.title}"/> --%>
-		<%--<form:hidden path="totalprice" value="${adv.price}"/>  --%>
-		<%--<form:hidden path="category" value="${adv.categories}"/> --%>
-		<%-- <form:hidden path="filename" value="${adv.filename}"/>  --%>
-			<tr>
 				<td>${adv.title}</td>
 				<td>${adv.message}</td>
 				<td>${adv.user.username}</td>
@@ -64,5 +60,6 @@
 	</form:form>
         </c:forEach>
                         </table>
+          </div>
 </body>
 </html>

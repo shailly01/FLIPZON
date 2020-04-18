@@ -6,11 +6,13 @@
 <html>
 <head>
 <title>Add Product Form</title>
+ <link href="<c:url value="/resources/CSS/mvp.css" />" rel="stylesheet">
 </head>
 <body>
+     <div style="margin-top: 50px; margin-left: 50px;">
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-	<a href="${contextPath}/user/">Seller Home</a><br/>
+        <a href="${contextPath}/user/"><button type = "button" class="btn btn-info" style = "width: 200px;">Seller Home</button></a><br/>
 
 	<h2>Posting a New Product</h2>
 
@@ -64,11 +66,11 @@
 			</tr>
 
 			<tr>
-				<td colspan="2"><input type="submit" value="Post Product" /></td>
+                            <td colspan="2"><button type = "submit" class="btn btn-info" style = "width: 200px;"value="Post Product">Post Product</button></td>
 			</tr>
 		</table>
 
 	</form:form>
-
+     </div>
 </body>
 </html>

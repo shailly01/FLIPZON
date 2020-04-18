@@ -7,14 +7,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>List of Users</title>
+<link href="<c:url value="/resources/CSS/mvp.css" />" rel="stylesheet">
 </head>
 <body>
+    
+    <div style="margin-top: 10px; margin-left: 1200px;">	
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
- 	<a href="${contextPath}/"><input type="submit" value="Logout"></a><br/><br> 
+        <a href="${contextPath}/"><button type="submit" class="btn btn-info" value="Logout">Logout</button></a><br/><br> 
+        </div>
+        <div style="margin-top: 10px; margin-left: 50px;">
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
-	<a href="${contextPath}/admin/">Admin Home</a><br/>
+<a href="${contextPath}/admin/"><button type = "button" class="btn btn-info" style = "width: 200px;">Admin Home</button></a><br/>
 	<br>
 
 	
@@ -45,7 +50,7 @@
 
 		</c:forEach>
 	</table>
-	
+</div>	
 </body>
 </html>
 

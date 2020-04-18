@@ -6,20 +6,16 @@
 <html>
 <head>
 <title>Sign Up Form</title>
+ <link href="<c:url value="/resources/CSS/mvp.css" />" rel="stylesheet">
 </head>
 <body>
-
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
 	<a href="${contextPath}"><input type="submit" value="Go Back"></a><br/>
 	
-
 	<h2>Welcome to the Registration page</h2><br>
 	<h5>Fill in your details below to register </h5>
-
 	<form:form action="${contextPath}/user/register" commandName="user"
 		method="post">
-
 		<table>
 			<tr>
 				<td>First Name:</td>
@@ -33,7 +29,6 @@
 					<font color="red"><form:errors path="lastName" /></font></td>
 			</tr>
 			
-
 			<tr>
 				<td>User Name:</td>
 				<td><form:input path="username" size="30" required="required" />
@@ -67,8 +62,6 @@
 				<td colspan="2"><input type="submit" value="Register User" /></td>
 			</tr>
 		</table>
-
 	</form:form>
-
 </body>
 </html>
