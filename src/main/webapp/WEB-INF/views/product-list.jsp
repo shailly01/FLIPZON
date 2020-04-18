@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>List Products</title>
+<link href="<c:url value="/resources/CSS/mvp.css" />" rel="stylesheet">
 </head>
 <body>
     <div style="margin-top: 10px; margin-left: 1200px;">
@@ -16,7 +17,7 @@
 	 </div>
         
           <div style="margin-top: 10px; margin-left: 50px;">
-        <a href="${contextPath}/user/buyer">Customer Home</a><br/>
+              <a href="${contextPath}/user/buyer"><button type = "submit" class="btn btn-info" style = "width: 200px;"value="Customer Home">Customer Home</button></a><br/>
         <br>
         
         	<table border="1" cellpadding="5" cellspacing="5">
@@ -53,7 +54,7 @@
                     
                 
 <!--                <td><input type="text" name="quantity" value="${cart.quantity}"/></td>-->
-                <td><input type="submit" value="Add to Cart" /></td>
+                <td><button type = "submit" class="btn btn-info" style = "width: 200px;"value="Add to Cart">Add to Cart</button></td>
 			</tr>
 		
 	

@@ -9,8 +9,9 @@
  <link href="<c:url value="/resources/CSS/mvp.css" />" rel="stylesheet">
 </head>
 <body>
+    <div style="margin-top: 10px; margin-left: 50px;">
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-	<a href="${contextPath}"><input type="submit" value="Go Back"></a><br/>
+       <a href="${contextPath}"><button type = "submit" class="btn btn-info" style = "width: 200px;"value="Go Back">Go Back</button></a><br/>
 	
 	<h2>Welcome to the Registration page</h2><br>
 	<h5>Fill in your details below to register </h5>
@@ -59,9 +60,10 @@
 			</tr>
 			
 			<tr>
-				<td colspan="2"><input type="submit" value="Register User" /></td>
+                             <td colspan="2"><button type = "submit" class="btn btn-info" style = "width: 200px;"value="Register User">Register User</button></td>
 			</tr>
 		</table>
 	</form:form>
+    </div>
 </body>
 </html>

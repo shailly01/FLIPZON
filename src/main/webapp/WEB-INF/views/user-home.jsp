@@ -22,7 +22,7 @@
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <form:form action="${contextPath}/product/logout" method="post" commandName="product">
-    <div style="margin-top: 50px; margin-left: 1500px;">
+    <div style="margin-top: 50px; margin-left: 1200px;">
     <button type="submit" class="btn btn-info" value="Logout">Logout</button>
     </div>
 <br/><br/>

@@ -11,7 +11,7 @@
 </head>
 <body>
     
-    <div style="margin-top: 10px; margin-left: 1500px;">	
+    <div style="margin-top: 10px; margin-left: 1200px;">	
     <c:set var="contextPath" value="${pageContext.request.contextPath}" />
  <a href="${contextPath}/"><button type="submit" class="btn btn-info" value="Logout">Logout</button></a><br/><br> 
 </div>

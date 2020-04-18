@@ -8,17 +8,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link href="<c:url value="/resources/CSS/mvp.css" />" rel="stylesheet">
 </head>
 <body>
     
-    
+    <div style="margin-top: 10px; margin-left: 1200px;">	
     	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
- 	<a href="${contextPath}/"><input type="submit" value="Logout"></a><br/><br> 
+        <a href="${contextPath}/"><button type="submit" class="btn btn-info" value="Logout">Logout</button></a><br/><br> 
+    </div>
+        
+          <div style="margin-top: -50px; margin-left: 50px;">
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
         
         
-        <a href="${contextPath}/user/buyer">Customer Home</a><br/>
+<a href="${contextPath}/user/buyer"><button type = "button" style = "width:200px;">Customer Home</button></a><br/>
         <br>
         
  <form:form action="${contextPath}/cart/checkout" method="post" commandName="cart">       
@@ -48,7 +52,8 @@
                </c:forEach>
 		
 	</table>
-     <input type="submit" value="Checkout Items" />
+        <button type = "button" style = "width:200px;"value="Checkout Items" ">Checkout Items</button>
 	</form:form>
+          </div>
 </body>
 </html>
