@@ -12,6 +12,7 @@ public class CategoryDAO extends DAO {
         try {
             begin();
             Query q=getSession().createQuery("from Category where title= :title");
+            q.setCacheable(true);
             q.setString("title",title);
             Category category=(Category)q.uniqueResult();
             commit();
@@ -26,6 +27,7 @@ public class CategoryDAO extends DAO {
         try {
             begin();
             Query q = getSession().createQuery("from Category");
+            q.setCacheable(true);
             List<Category> list = q.list();
             commit();
             return list;

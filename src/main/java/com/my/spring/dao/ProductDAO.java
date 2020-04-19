@@ -37,6 +37,7 @@ public class ProductDAO extends DAO {
 
 			begin();
 			Query q = getSession().createQuery("from Product a where a.id= :id");
+                        q.setCacheable(true);
 			q.setLong("id", id);
 			Product a = (Product) q.uniqueResult();
 			getSession().delete(a);
@@ -70,6 +71,7 @@ public class ProductDAO extends DAO {
 		try {
 			begin();
 			Query q = getSession().createQuery("from Product a where a.user.personID = :id");
+                        q.setCacheable(true);
 			q.setLong("id", id);
 			List<Product> products = q.list();
 			commit();
@@ -85,6 +87,7 @@ public class ProductDAO extends DAO {
 		try {
 			begin();
 			Query q = getSession().createQuery("from Product");
+                        q.setCacheable(true);
 			List<Product> products = q.list();
 			commit();
 			return products;

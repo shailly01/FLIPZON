@@ -17,10 +17,10 @@ public class UserDAO extends DAO {
 		try {
 			begin();
 			Query q = getSession().createQuery("from User where username = :username and password = :password");
-			q.setString("username", username);
+                         q.setCacheable(true);
+                        q.setString("username", username);
 			q.setString("password", password);
 			User user = (User) q.uniqueResult();
-			//System.out.println(user.getUsertype());
 			commit();
 			return user;
 		} catch (HibernateException e) {
@@ -33,6 +33,7 @@ public class UserDAO extends DAO {
 		try {
 			begin();
 			Query q = getSession().createQuery("from User where personID= :personID");
+                       q.setCacheable(true);
 			q.setInteger("personID", userId);
 			User user = (User) q.uniqueResult();
 			commit();
@@ -48,6 +49,7 @@ public class UserDAO extends DAO {
 			begin();
 			System.out.println("inside userDAO");
 			Query q = getSession().createQuery("from User u where u.username= :username");
+                        q.setCacheable(true);
 			q.setString("username", username);
 			User u = (User) q.uniqueResult();
 			commit();
@@ -103,6 +105,7 @@ public class UserDAO extends DAO {
 			begin();
 			System.out.println("inside userDAO1111111111");
 			Query q = getSession().createQuery("from  Email e where e.emailAddress= :emailAddress");
+                        q.setCacheable(true);
 			q.setString("emailAddress", emailAddress);
 			Email e = (Email) q.uniqueResult();
 			commit();

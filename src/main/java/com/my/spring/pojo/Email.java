@@ -7,11 +7,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "email_table")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Email {
 
 	@Id

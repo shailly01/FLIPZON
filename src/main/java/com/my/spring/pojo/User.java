@@ -2,6 +2,7 @@ package com.my.spring.pojo;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Cacheable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,9 +13,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "user_table")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @PrimaryKeyJoinColumn(name = "personID")
 public class User extends Person {
 

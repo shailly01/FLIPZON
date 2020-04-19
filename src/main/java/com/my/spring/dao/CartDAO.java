@@ -40,6 +40,7 @@ public class CartDAO extends DAO {
 
 			begin();
 			Query q = getSession().createQuery("from Cart c where c.id= :id");
+                        q.setCacheable(true);
 			q.setLong("id", id);
 			Cart c = (Cart) q.uniqueResult();
 			getSession().delete(c);
@@ -124,6 +125,7 @@ public class CartDAO extends DAO {
 		try {
 			begin();
 			Query q = getSession().createQuery("from Cart c where c.user.personID = :id");
+                        q.setCacheable(true);
 			q.setLong("id", id);
 			List<Cart> carts = q.list();
 			commit();

@@ -15,6 +15,8 @@
     </properties>
     
     <dependencies>
+        
+        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -200,7 +202,13 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.4.8.Final</version>
         </dependency>
- 
+        
+            <dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-ehcache</artifactId>
+    <version>5.4.8.Final</version>
+    </dependency>
+      
         <!-- http://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
         <dependency>
             <groupId>org.hibernate</groupId>

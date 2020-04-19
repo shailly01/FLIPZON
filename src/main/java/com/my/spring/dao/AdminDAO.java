@@ -28,6 +28,7 @@ public class AdminDAO extends DAO {
 
 			System.out.println("inside AdminDAO");
 			org.hibernate.Query q1 = getSession().createQuery("from Admin a where a.username = :username");
+                        q1.setCacheable(true);
 			q1.setString("username", "admin");
 			Admin u = (Admin) q1.uniqueResult();
 			if (u == null) {
@@ -43,7 +44,8 @@ public class AdminDAO extends DAO {
 
 			// begin();
 			Query q = getSession().createQuery("from Admin ad where ad.username = :username and ad.password = :password");
-			q.setString("username", username);
+			q.setCacheable(true);
+                        q.setString("username", username);
 			q.setString("password", password);
 			Admin admin = (Admin) q.uniqueResult();
 			commit();
@@ -59,6 +61,7 @@ public class AdminDAO extends DAO {
 		try {
 			begin();
 			Query q = getSession().createQuery("from User u where u.active = 'true'");
+                        q.setCacheable(true);
 			List<User> users = q.list();
 			commit();
 			return users;
@@ -74,6 +77,7 @@ public class AdminDAO extends DAO {
 		try {
 			begin();
 			Query q = getSession().createQuery("from User u where u.active = 'false'");
+                        q.setCacheable(true);
 			List<User> users = q.list();
 			commit();
 			return users;
@@ -90,6 +94,7 @@ public class AdminDAO extends DAO {
 
 			begin();
 			Query q = getSession().createQuery("from User u where u.personID= :id");
+                        q.setCacheable(true);
 			q.setLong("id", id);
 			User a = (User) q.uniqueResult();
 			getSession().delete(a);
@@ -135,6 +140,7 @@ public class AdminDAO extends DAO {
 		try {
 			begin();
 			Query q = getSession().createQuery("from User u where u.active = 'Reject'");
+                        q.setCacheable(true);
 			List<User> users = q.list();
 			commit();
 			return users;
