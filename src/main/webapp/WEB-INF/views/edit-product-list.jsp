@@ -39,15 +39,14 @@
 		<c:forEach var="adv" items="${products}">
                     <form action="${contextPath}/product/update/${adv.id}.htm" method="POST">
 			<tr>
-                            
-                            <td><input type="text" name="title" value="${adv.title}"/></td>
-                            <td><input type="text" name="description" value="${adv.message}"/></td>
+                           <td><input type="text" name="title" value="${adv.title}" required="required"/></td>
+                            <td><input type="text" name="description" value="${adv.message}" required="required"/></td>
                             <td>${adv.user.username}</td>
                             <td><c:forEach var="categ" items="${adv.categories}">
                     	    ${categ}
                             </c:forEach></td>
                             <td><img height="150" width="150" src="${pageContext.request.contextPath}/${adv.filename}"/></td>
-                            <td><input type="text" name="price" value= "${adv.price}"/></td>
+                            <td><input type="text" name="price" required="required" value= "${adv.price}"/></td>
                             <td><button value="edit" type="submit">Edit</button></td>
                             </tr>
                         </form>

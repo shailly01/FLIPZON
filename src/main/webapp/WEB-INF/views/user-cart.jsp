@@ -52,7 +52,7 @@
                </c:forEach>
 		
 	</table>
-        <button type = "button" style = "width:200px;"value="Checkout Items" ">Checkout Items</button>
+        <button type = "submit" style = "width:200px;"value="Checkout Items">Checkout Items</button>
 	</form:form>
           </div>
 </body>

@@ -24,12 +24,18 @@ import com.my.spring.exception.UserException;
 import com.my.spring.pojo.User;
 import com.my.spring.pojo.Admin;
 import com.my.spring.validator.UserValidator;
+import java.util.Locale;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
+    
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 
 	@Autowired
 	@Qualifier("userDao")
@@ -53,7 +59,7 @@ public class UserController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	protected String goToUserHome(HttpServletRequest request) throws Exception {
-		return "user-home";
+           return "user-home";
 	}
 
 	@RequestMapping(value = "/user/buyer", method = RequestMethod.GET)
@@ -76,6 +82,7 @@ public class UserController {
 			if ((u == null) && (a == null)) {
 				System.out.println("UserName/Password does not exist");
 				session.setAttribute("errorMessage", "UserName/Password does not exist");
+                               
 				return "error";
 			} else if ((a != null) && (a.getUsertype().equals("admin"))) {
 				session.setAttribute("admin", "a");
@@ -95,12 +102,12 @@ public class UserController {
 				session.setAttribute("errorMessage", "Account is not activate");
 				return "error";
 			} else {
-				session.setAttribute("user", u);
+                              session.setAttribute("user", u);
 				return "user-home";
 			}
 
 		} catch (UserException e) {
-			System.out.println("Exception: " + e.getMessage());
+                       	System.out.println("Exception: " + e.getMessage());
 			session.setAttribute("errorMessage", "error while login");
 			return "error";
 		}
@@ -170,7 +177,7 @@ public class UserController {
 			//                }
 
 		} catch (UserException e) {
-			System.out.println("Exception: " + e.getMessage());
+                        System.out.println("Exception: " + e.getMessage());
 			return new ModelAndView("error", "errorMessage", "error while login");
 		}
 

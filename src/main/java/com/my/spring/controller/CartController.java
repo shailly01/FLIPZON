@@ -122,7 +122,16 @@ public class CartController extends DAO {
 		id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
 
 		try {
-
+                    int q = Integer.parseInt(request.getParameter("quantity"));
+                    if(q<0 || q==0){
+                       HttpSession session = (HttpSession) request.getSession();
+			User u = (User) session.getAttribute("user");
+			id = u.getPersonID();
+			List<Cart> carts = cartDao.list(id);
+			int len = carts.size();
+			return new ModelAndView("edit-user-cart", "carts", carts); 
+                    }
+                    else{
 			Map<String, String> quantity = new HashMap<>();
 			quantity.put("quantity", request.getParameter("quantity"));
 			System.out.println("Hash Map is  " + quantity);
@@ -132,6 +141,7 @@ public class CartController extends DAO {
 			long ident = u.getPersonID();
 			List<Cart> carts = cartDao.list(ident);
 			return new ModelAndView("user-cart", "carts", carts);
+                    }
 
 		} catch (CartException e) {
 			System.out.println(e.getMessage());

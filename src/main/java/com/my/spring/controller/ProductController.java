@@ -25,6 +25,7 @@ import com.my.spring.pojo.Cart;
 import com.my.spring.pojo.Category;
 import com.my.spring.pojo.User;
 import com.my.spring.validator.ProductValidator;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,6 +36,7 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 @Controller
 //@RequestMapping("/product/*")
 public class ProductController {
+  
 
 	@Autowired
 	@Qualifier("productDao")
@@ -58,8 +60,8 @@ public class ProductController {
 
 	@Autowired
 	ServletContext servletContext;
-
-	@RequestMapping(value = "/product/add", method = RequestMethod.GET)
+        
+        	@RequestMapping(value = "/product/add", method = RequestMethod.GET)
 	public ModelAndView initializeForm(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("categories", categoryDao.list());
@@ -215,14 +217,34 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/product/update/*", method = RequestMethod.POST)
-	public ModelAndView editProduct(HttpServletRequest request) throws Exception {
-
+	public ModelAndView editProduct(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String url = request.getRequestURI();
 		long id = 0;
 		id = Integer.parseInt((url.split("/")[4]).split("\\.")[0]);
 		try {
 
-			Map<String, String> product = new HashMap<>();
+                        
+                    Float p = Float.parseFloat(request.getParameter("price"));
+                    //PrintWriter out =  response.getWriter();
+                         if((p<0) || (p==0.0)){  
+//                             out.println("<script src = 'https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js'></script>");
+//                              out.println("<script src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+//                               out.println("<script>");
+//                                out.println("$(document).ready.(function(){");
+//                              out.println("swal ('enter valid price value','','error');");
+//                               out.println("});");
+//                               out.println("</script>");
+                         HttpSession session = (HttpSession) request.getSession();
+			User u = (User) session.getAttribute("user");
+			id = u.getPersonID();
+			List<Product> products = productDao.list(id);
+                        
+			return new ModelAndView("edit-product-list", "products", products);
+                           
+                            }
+                            
+                        else{
+                        Map<String, String> product = new HashMap<>();
 			product.put("title", request.getParameter("title"));
 			product.put("description", request.getParameter("description"));
 			product.put("price", request.getParameter("price"));
@@ -233,6 +255,7 @@ public class ProductController {
 			List<Product> products = productDao.list(ident);
 
 			return new ModelAndView("seller-product-list", "products", products);
+                            }
 
 			// return new ModelAndView("updateSucess");
 		} catch (ProductException e) {

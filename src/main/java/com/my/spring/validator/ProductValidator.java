@@ -57,7 +57,7 @@ public class ProductValidator implements Validator {
 		}
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "error.invalid.price", "Price Required");
-		if (!(newProduct.getPrice() != null && newProduct.getPrice() != 0)) {
+		if (!(newProduct.getPrice() != null && newProduct.getPrice() != 0 && !(newProduct.getPrice()<0))) {
 			pattern = Pattern.compile(PRICE_PATTERN);
 			matcher = pattern.matcher(String.valueOf(newProduct.getPrice()));
 			if (!matcher.matches()) {
